@@ -4,8 +4,7 @@ import { Card } from "../../components/ui/Card";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
 import {
-  Users, Calendar, Clock, TrendingUp, CheckCircle, XCircle,
-  BarChart3, UserCheck, Video, ArrowUpRight, Activity
+  Users, Calendar, Clock, CheckCircle, Video, ArrowUpRight
 } from "lucide-react";
 import { recruiterAPI } from "../../services/api";
 import { useNavigate } from "react-router-dom";
@@ -14,64 +13,41 @@ const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i = 0) => ({
     opacity: 1, y: 0,
-    transition: { delay: i * 0.08, duration: 0.5, ease: "easeOut" },
+    transition: { delay: i * 0.06, duration: 0.5, ease: "easeOut" },
   }),
 };
-
-function FunnelBar({ label, value, max, color }) {
-  const width = max > 0 ? (value / max) * 100 : 0;
-  return (
-    <div className="space-y-1.5">
-      <div className="flex justify-between text-sm">
-        <span className="text-muted">{label}</span>
-        <span className="font-semibold text-foreground">{value}</span>
-      </div>
-      <div className="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${width}%` }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className={`h-full rounded-full ${color}`}
-        />
-      </div>
-    </div>
-  );
-}
 
 export function RecruiterDashboard() {
   const navigate = useNavigate();
   const [candidates, setCandidates] = useState([]);
   const [interviews, setInterviews] = useState([]);
-  const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
       recruiterAPI.getCandidates().then((r) => setCandidates(r.data.data)),
       recruiterAPI.getInterviews().then((r) => setInterviews(r.data.data)),
-      recruiterAPI.getAnalytics().then((r) => setAnalytics(r.data.data)).catch(() => null),
     ]).finally(() => setLoading(false));
   }, []);
 
   const upcomingInterviews = interviews.filter((i) => i.status === "SCHEDULED");
   const completedInterviews = interviews.filter((i) => i.status === "COMPLETED");
-  const funnel = analytics?.hiringFunnel || {};
-  const skillDist = analytics?.skillDistribution || [];
-  const successRate = analytics?.interviewSuccessRate || 0;
+  const inProgressInterviews = interviews.filter((i) => i.status === "IN_PROGRESS");
 
   const statCards = [
-    { label: "Total Candidates", value: candidates.length, icon: Users, color: "border-l-primary", iconColor: "text-primary/20" },
-    { label: "Upcoming Interviews", value: upcomingInterviews.length, icon: Calendar, color: "border-l-amber-500", iconColor: "text-amber-500/20" },
-    { label: "Completed", value: completedInterviews.length, icon: CheckCircle, color: "border-l-green-500", iconColor: "text-green-500/20" },
-    { label: "Success Rate", value: `${successRate}%`, icon: TrendingUp, color: "border-l-purple-500", iconColor: "text-purple-500/20" },
+    { label: "My Candidates", value: candidates.length, icon: Users, gradient: "from-blue-500 to-cyan-500", bg: "bg-blue-500/5 border-blue-500/20" },
+    { label: "Upcoming Interviews", value: upcomingInterviews.length, icon: Calendar, gradient: "from-amber-500 to-orange-500", bg: "bg-amber-500/5 border-amber-500/20" },
+    { label: "Completed", value: completedInterviews.length, icon: CheckCircle, gradient: "from-green-500 to-emerald-500", bg: "bg-green-500/5 border-green-500/20" },
+    { label: "Total Interviews", value: interviews.length, icon: Clock, gradient: "from-purple-500 to-pink-500", bg: "bg-purple-500/5 border-purple-500/20" },
   ];
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Recruiter Dashboard</h1>
-          <p className="text-sm text-muted mt-1">ATS Overview & Hiring Analytics</p>
+          <p className="text-sm text-muted mt-1">Manage your candidates and interviews</p>
         </div>
         <div className="flex gap-3">
           <Button variant="secondary" onClick={() => navigate('/recruiter/candidates')} className="gap-2">
@@ -87,119 +63,54 @@ export function RecruiterDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {statCards.map((card, i) => (
           <motion.div key={card.label} initial="hidden" animate="visible" variants={fadeUp} custom={i}>
-            <Card className={`p-5 ${card.color} border-l-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors`}>
-              <div>
-                <h3 className="font-medium text-muted text-sm">{card.label}</h3>
-                <p className="text-2xl font-bold mt-1 text-foreground">{loading ? "..." : card.value}</p>
+            <Card className={`p-5 border ${card.bg} hover:scale-[1.02] transition-transform duration-200`}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-medium text-muted text-xs uppercase tracking-wider">{card.label}</h3>
+                  <p className="text-3xl font-bold mt-2 text-foreground">{loading ? "..." : card.value}</p>
+                </div>
+                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${card.gradient} flex items-center justify-center shadow-lg`}>
+                  <card.icon className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <card.icon className={`w-10 h-10 ${card.iconColor}`} />
             </Card>
           </motion.div>
         ))}
       </div>
 
-      {/* Analytics Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Hiring Funnel */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={4}>
-          <Card className="p-6 h-full">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-foreground">Hiring Funnel</h2>
-              <Activity className="w-5 h-5 text-muted" />
-            </div>
-            <div className="space-y-4">
-              <FunnelBar label="Applied" value={funnel.applied || 0} max={funnel.applied || 1} color="bg-blue-500" />
-              <FunnelBar label="Interviewed" value={funnel.interviewed || 0} max={funnel.applied || 1} color="bg-purple-500" />
-              <FunnelBar label="Selected" value={funnel.selected || 0} max={funnel.applied || 1} color="bg-green-500" />
-              <FunnelBar label="Rejected" value={funnel.rejected || 0} max={funnel.applied || 1} color="bg-red-500" />
-              <FunnelBar label="Pending" value={funnel.pending || 0} max={funnel.applied || 1} color="bg-amber-500" />
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Skill Distribution */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={5}>
-          <Card className="p-6 h-full">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-foreground">Skill Distribution</h2>
-              <BarChart3 className="w-5 h-5 text-muted" />
-            </div>
-            <div className="space-y-3">
-              {skillDist.length === 0 && !loading && (
-                <p className="text-muted text-sm py-4 text-center">No skill data yet</p>
-              )}
-              {skillDist.map((s) => {
-                const maxCount = skillDist[0]?.count || 1;
-                return (
-                  <div key={s.skill} className="flex items-center gap-3">
-                    <span className="text-sm text-muted w-24 truncate">{s.skill}</span>
-                    <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(s.count / maxCount) * 100}%` }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="h-full rounded-full bg-gradient-to-r from-primary to-cyan-500"
-                      />
-                    </div>
-                    <span className="text-sm font-semibold text-foreground w-6 text-right">{s.count}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        </motion.div>
-
-        {/* Interview Success Rate + Quick Stats */}
-        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={6}>
-          <Card className="p-6 h-full flex flex-col">
-            <h2 className="text-lg font-semibold text-foreground mb-6">Interview Metrics</h2>
-            <div className="flex-1 flex flex-col items-center justify-center gap-4">
-              <div className="relative w-32 h-32">
-                <svg width="128" height="128" className="-rotate-90">
-                  <circle cx="64" cy="64" r="56" fill="none" stroke="rgba(51,65,85,0.5)" strokeWidth="10" />
-                  <circle cx="64" cy="64" r="56" fill="none" stroke="#22c55e" strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeDasharray={2 * Math.PI * 56}
-                    strokeDashoffset={2 * Math.PI * 56 - (successRate / 100) * 2 * Math.PI * 56}
-                    style={{ transition: "stroke-dashoffset 1.5s ease" }}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-3xl font-bold text-foreground">{successRate}%</span>
-                  <span className="text-xs text-muted">Success</span>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4 w-full mt-4">
-                <div className="text-center p-3 rounded-lg bg-green-500/5 border border-green-500/20">
-                  <UserCheck className="w-5 h-5 text-green-500 mx-auto mb-1" />
-                  <p className="text-lg font-bold text-foreground">{funnel.selected || 0}</p>
-                  <p className="text-xs text-muted">Selected</p>
-                </div>
-                <div className="text-center p-3 rounded-lg bg-red-500/5 border border-red-500/20">
-                  <XCircle className="w-5 h-5 text-red-500 mx-auto mb-1" />
-                  <p className="text-lg font-bold text-foreground">{funnel.rejected || 0}</p>
-                  <p className="text-xs text-muted">Rejected</p>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </motion.div>
-      </div>
-
-      {/* Recent Interviews */}
-      <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={7}>
+      {/* Interview List */}
+      <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={4}>
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Recent Interviews</h2>
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-semibold text-foreground">Interviews</h2>
+              {inProgressInterviews.length > 0 && (
+                <Badge variant="warning" className="gap-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  {inProgressInterviews.length} Live
+                </Badge>
+              )}
+            </div>
             <Button variant="ghost" size="sm" onClick={() => navigate('/recruiter/candidates')} className="gap-1 text-muted hover:text-foreground">
               View All <ArrowUpRight className="w-4 h-4" />
             </Button>
           </div>
-          {interviews.length === 0 && !loading && <p className="text-muted text-sm py-4 text-center">No interviews scheduled yet.</p>}
-          <div className="space-y-3">
-            {interviews.slice(0, 5).map((i) => (
-              <div key={i._id} className="flex items-center justify-between p-4 bg-background rounded-lg border border-border hover:border-border/80 transition-colors">
-                <div className="flex items-center gap-3">
+
+          {interviews.length === 0 && !loading && (
+            <div className="text-center py-12">
+              <Calendar className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+              <p className="text-muted font-medium">No interviews scheduled yet</p>
+              <p className="text-sm text-slate-600 mt-1">Schedule your first interview to get started</p>
+              <Button onClick={() => navigate('/recruiter/schedule')} className="mt-4 gap-2">
+                <Calendar className="w-4 h-4" /> Schedule Interview
+              </Button>
+            </div>
+          )}
+
+          <div className="space-y-2">
+            {interviews.slice(0, 8).map((i) => (
+              <div key={i._id} className="flex items-center justify-between p-4 bg-background/50 rounded-xl border border-border hover:border-border/80 hover:bg-slate-800/30 transition-all group">
+                <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-sm font-bold text-primary">
                     {(i.candidateId?.name || "?")[0]}
                   </div>
@@ -209,15 +120,21 @@ export function RecruiterDashboard() {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
+                  {i.result && i.result !== "pending" && (
+                    <Badge variant={i.result === "selected" ? "success" : "danger"}>
+                      {i.result}
+                    </Badge>
+                  )}
                   <Badge variant={
                     i.status === 'SCHEDULED' ? 'primary' :
                     i.status === 'COMPLETED' ? 'success' :
                     i.status === 'IN_PROGRESS' ? 'warning' : 'danger'
                   }>
+                    {i.status === 'IN_PROGRESS' && <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse mr-1" />}
                     {i.status}
                   </Badge>
                   {i.status === 'SCHEDULED' && (
-                    <Button size="sm" variant="ghost" onClick={() => navigate(`/recruiter/interview/${i._id}`)} className="gap-1 text-xs">
+                    <Button size="sm" variant="ghost" onClick={() => navigate(`/recruiter/interview/${i._id}`)} className="gap-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                       <Video className="w-3 h-3" /> Start
                     </Button>
                   )}
@@ -227,6 +144,41 @@ export function RecruiterDashboard() {
           </div>
         </Card>
       </motion.div>
+
+      {/* Candidates Summary */}
+      {candidates.length > 0 && (
+        <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={5}>
+          <Card className="p-6">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-lg font-semibold text-foreground">Your Candidates</h2>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/recruiter/candidates')} className="gap-1 text-muted hover:text-foreground">
+                View All <ArrowUpRight className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="space-y-2">
+              {candidates.slice(0, 5).map((c) => (
+                <div key={c.id} className="flex items-center justify-between p-3 bg-background/50 rounded-lg border border-border">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-sm font-bold text-primary">
+                      {(c.name || "?")[0]}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{c.name}</p>
+                      <p className="text-xs text-muted">{c.email}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={`text-sm font-bold ${c.avgScore >= 70 ? 'text-green-400' : c.avgScore >= 50 ? 'text-amber-400' : 'text-slate-400'}`}>
+                      {c.avgScore}%
+                    </p>
+                    <p className="text-[10px] text-slate-600">{c.totalAttempts} tests</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </motion.div>
+      )}
     </div>
   );
 }

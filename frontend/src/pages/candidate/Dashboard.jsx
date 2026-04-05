@@ -5,7 +5,7 @@ import { Button } from "../../components/ui/Button";
 import { Badge } from "../../components/ui/Badge";
 import {
   Play, BarChart3, Trophy, Clock, Calendar, Video,
-  TrendingUp, Target, ChevronRight, BookOpen
+  TrendingUp, Target, ChevronRight, Code
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { performanceAPI, interviewAPI } from "../../services/api";
@@ -103,7 +103,7 @@ export function CandidateDashboard() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 { label: "Mock Test", icon: Play, to: "/candidate/test", color: "from-blue-500 to-cyan-500" },
-                { label: "Assessment", icon: BookOpen, to: "/candidate/assessment", color: "from-purple-500 to-pink-500" },
+                { label: "Practice", icon: Code, to: "/candidate/practice", color: "from-purple-500 to-pink-500" },
                 { label: "Companies", icon: Trophy, to: "/candidate/companies", color: "from-amber-500 to-orange-500" },
                 { label: "Analytics", icon: BarChart3, to: "/candidate/performance", color: "from-green-500 to-emerald-500" },
               ].map((a) => (
@@ -179,15 +179,9 @@ export function CandidateDashboard() {
                     {new Date(interview.scheduledAt).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} at{' '}
                     {new Date(interview.scheduledAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                   </p>
-                  {interview.status === 'IN_PROGRESS' ? (
-                    <Button size="sm" onClick={() => navigate(`/candidate/interview/${interview._id}`)} className="w-full gap-1 text-xs">
-                      <Video className="w-3 h-3" /> Join Now
-                    </Button>
-                  ) : (
-                    <Badge variant="primary">
-                      <Clock className="w-3 h-3 mr-1" /> Scheduled
-                    </Badge>
-                  )}
+                  <Button size="sm" onClick={() => navigate(`/candidate/interview/${interview._id}`)} className="w-full gap-1 text-xs">
+                    <Video className="w-3 h-3" /> {interview.status === 'IN_PROGRESS' ? 'Join Now' : 'Join Interview'}
+                  </Button>
                 </div>
               ))}
             </div>

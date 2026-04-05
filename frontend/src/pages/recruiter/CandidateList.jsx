@@ -9,7 +9,7 @@ import {
   CheckCircle, XCircle, Eye, ChevronDown, Clock, BarChart3,
   Mail, Download
 } from "lucide-react";
-import { recruiterAPI, interviewAPI, assessmentAPI } from "../../services/api";
+import { recruiterAPI, interviewAPI } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 const statusBadgeVariant = {
@@ -29,7 +29,6 @@ export function CandidateList() {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [slideOpen, setSlideOpen] = useState(false);
   const [candidateDetail, setCandidateDetail] = useState(null);
-  const [candidateAssessments, setCandidateAssessments] = useState([]);
 
   useEffect(() => {
     recruiterAPI.getCandidates()
@@ -41,15 +40,10 @@ export function CandidateList() {
     setSelectedCandidate(candidate);
     setSlideOpen(true);
     try {
-      const [perfRes, assessRes] = await Promise.all([
-        recruiterAPI.getCandidatePerformance(candidate.id),
-        assessmentAPI.getCandidateAssessments(candidate.id).catch(() => ({ data: { data: [] } })),
-      ]);
+      const perfRes = await recruiterAPI.getCandidatePerformance(candidate.id);
       setCandidateDetail(perfRes.data.data);
-      setCandidateAssessments(assessRes.data.data);
     } catch {
       setCandidateDetail(null);
-      setCandidateAssessments([]);
     }
   };
 
@@ -57,7 +51,6 @@ export function CandidateList() {
     setSlideOpen(false);
     setSelectedCandidate(null);
     setCandidateDetail(null);
-    setCandidateAssessments([]);
   };
 
   const handleStartInterview = async (candidateId) => {
@@ -310,26 +303,6 @@ export function CandidateList() {
               )}
             </div>
 
-            {/* Assessments */}
-            <div>
-              <h4 className="text-sm font-semibold text-muted uppercase tracking-wider mb-2">Assessments</h4>
-              <div className="space-y-2">
-                {candidateAssessments.length === 0 && (
-                  <p className="text-sm text-muted text-center py-3">No assessments yet</p>
-                )}
-                {candidateAssessments.map((a) => (
-                  <div key={a._id} className="flex items-center justify-between p-3 rounded-lg border border-border bg-background">
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{a.title}</p>
-                      <p className="text-xs text-muted">{a.type} • {a.language}</p>
-                    </div>
-                    <Badge variant={a.score >= 70 ? 'success' : a.score >= 50 ? 'warning' : 'danger'}>
-                      {a.score}/{a.maxScore}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             {/* Test History */}
             <div>

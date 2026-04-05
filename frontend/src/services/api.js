@@ -21,6 +21,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      localStorage.removeItem('role');
       window.location.href = '/login';
     }
     return Promise.reject(error);
@@ -59,10 +60,10 @@ export const performanceAPI = {
 // ─── Recruiter ───────────────────────────────────────
 export const recruiterAPI = {
   getCandidates: () => api.get('/recruiter/candidates'),
+  getAllCandidates: () => api.get('/recruiter/all-candidates'),
   getCandidatePerformance: (id) => api.get(`/recruiter/candidates/${id}`),
   scheduleInterview: (data) => api.post('/recruiter/interviews', data),
   getInterviews: () => api.get('/recruiter/interviews'),
-  getAnalytics: () => api.get('/recruiter/analytics'),
 };
 
 // ─── Interviews ──────────────────────────────────────
@@ -72,13 +73,6 @@ export const interviewAPI = {
   saveNotes: (id, data) => api.put(`/interviews/${id}/notes`, data),
   end: (id, data) => api.put(`/interviews/${id}/end`, data),
   getCandidateUpcoming: () => api.get('/interviews/candidate/upcoming'),
-};
-
-// ─── Assessments ─────────────────────────────────────
-export const assessmentAPI = {
-  submit: (data) => api.post('/assessments', data),
-  getAll: () => api.get('/assessments'),
-  getCandidateAssessments: (id) => api.get(`/assessments/candidate/${id}`),
 };
 
 // ─── Resume ──────────────────────────────────────────
@@ -97,6 +91,27 @@ export const leaderboardAPI = {
 export const adminAPI = {
   getStats: () => api.get('/admin/stats'),
   getUsers: (params) => api.get('/admin/users', { params }),
+  getCompanies: () => api.get('/admin/companies'),
+  createCompany: (data) => api.post('/admin/companies', data),
+  updateCompany: (id, data) => api.put(`/admin/companies/${id}`, data),
+  deleteCompany: (id) => api.delete(`/admin/companies/${id}`),
+};
+
+// ─── Jobs ────────────────────────────────────────────
+export const jobAPI = {
+  getAll: (params) => api.get('/jobs', { params }),
+  getById: (id) => api.get(`/jobs/${id}`),
+  create: (data) => api.post('/jobs', data),
+  update: (id, data) => api.put(`/jobs/${id}`, data),
+  delete: (id) => api.delete(`/jobs/${id}`),
+};
+
+// ─── Applications ────────────────────────────────────
+export const applicationAPI = {
+  getAll: (params) => api.get('/applications', { params }),
+  getByJob: (jobId) => api.get(`/applications/job/${jobId}`),
+  apply: (data) => api.post('/applications', data),
+  updateStatus: (id, data) => api.put(`/applications/${id}/status`, data),
 };
 
 export default api;

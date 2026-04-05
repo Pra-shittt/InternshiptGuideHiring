@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Badge } from "./ui/Badge";
 import { Button } from "./ui/Button";
 import {
-  ExternalLink, Bookmark, BookmarkCheck, Hash
+  ExternalLink, Bookmark, BookmarkCheck, Hash, FileQuestion
 } from "lucide-react";
 
 const difficultyConfig = {
@@ -11,10 +11,9 @@ const difficultyConfig = {
   Hard: { variant: "danger", glow: "shadow-red-500/10 hover:shadow-red-500/20" },
 };
 
-const tagVariants = ["primary", "purple", "cyan", "default", "success", "warning"];
-
-export function QuestionCard({ question, index, solved, bookmarked, onToggleBookmark }) {
+export function QuestionCard({ question, index, solved, bookmarked, onToggleBookmark, onSolve }) {
   const diff = difficultyConfig[question.difficulty] || difficultyConfig.Easy;
+  const isMCQ = question.type === "MCQ";
 
   return (
     <motion.div
@@ -29,11 +28,11 @@ export function QuestionCard({ question, index, solved, bookmarked, onToggleBook
         <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-green-500 to-emerald-400 rounded-t-xl" />
       )}
 
-      {/* Top Row: ID + Difficulty + Bookmark */}
+      {/* Top Row: Type + Difficulty + Bookmark */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono text-slate-500 bg-slate-800/60 px-2 py-0.5 rounded">
-            #{question.id}
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${isMCQ ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" : "bg-purple-500/10 text-purple-400 border border-purple-500/20"}`}>
+            {question.type || "CODING"}
           </span>
           <Badge variant={diff.variant}>{question.difficulty}</Badge>
         </div>
@@ -62,7 +61,7 @@ export function QuestionCard({ question, index, solved, bookmarked, onToggleBook
 
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5 mb-4">
-        {question.tags.map((tag, i) => (
+        {(question.tags || []).map((tag) => (
           <span
             key={tag}
             className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-800/60 text-slate-400 border border-slate-700/50"
@@ -82,13 +81,23 @@ export function QuestionCard({ question, index, solved, bookmarked, onToggleBook
         ) : (
           <span className="text-xs text-slate-600">Not attempted</span>
         )}
-        <Button
-          size="sm"
-          className="gap-1.5 text-xs shadow-md shadow-primary/15 hover:shadow-primary/30 transition-shadow"
-          onClick={() => window.open(question.leetcodeUrl, "_blank")}
-        >
-          Solve Question <ExternalLink className="w-3 h-3" />
-        </Button>
+        {isMCQ && onSolve ? (
+          <Button
+            size="sm"
+            className="gap-1.5 text-xs shadow-md shadow-primary/15 hover:shadow-primary/30 transition-shadow"
+            onClick={onSolve}
+          >
+            Solve MCQ <FileQuestion className="w-3 h-3" />
+          </Button>
+        ) : (
+          <Button
+            size="sm"
+            className="gap-1.5 text-xs shadow-md shadow-primary/15 hover:shadow-primary/30 transition-shadow"
+            onClick={() => question.leetcodeUrl && window.open(question.leetcodeUrl, "_blank")}
+          >
+            Solve Question <ExternalLink className="w-3 h-3" />
+          </Button>
+        )}
       </div>
     </motion.div>
   );

@@ -4,7 +4,9 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { Card } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { UserPlus, AlertCircle, Zap } from "lucide-react";
+import { UserPlus, AlertCircle, Zap, Eye, EyeOff } from "lucide-react";
+
+const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export function Signup() {
   const { signup, loading, error, clearError } = useAuthStore();
@@ -13,9 +15,18 @@ export function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("candidate");
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setEmailError("");
+
+    if (!isValidEmail(email)) {
+      setEmailError("Invalid email address");
+      return;
+    }
+
     try {
       const user = await signup(name, email, password, role);
       navigate(`/${user.role}/dashboard`);
@@ -36,10 +47,10 @@ export function Signup() {
           <p className="text-slate-400 text-sm">Join HireFlow to start your journey</p>
         </div>
 
-        {error && (
+        {(error || emailError) && (
           <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm">
             <AlertCircle className="w-4 h-4 shrink-0" />
-            {error}
+            {emailError || error}
           </div>
         )}
 
@@ -62,21 +73,32 @@ export function Signup() {
               type="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => { setEmail(e.target.value); clearError(); }}
+              onChange={(e) => { setEmail(e.target.value); clearError(); setEmailError(""); }}
               required
             />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Password</label>
-            <Input
-              id="signup-password"
-              type="password"
-              placeholder="Min 6 characters"
-              value={password}
-              onChange={(e) => { setPassword(e.target.value); clearError(); }}
-              required
-              minLength={6}
-            />
+            <div className="relative">
+              <Input
+                id="signup-password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Min 6 characters"
+                value={password}
+                onChange={(e) => { setPassword(e.target.value); clearError(); }}
+                required
+                minLength={6}
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300 transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-slate-300">Role</label>

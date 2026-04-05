@@ -19,7 +19,7 @@ export function DashboardLayout({ allowedRoles }) {
       <Sidebar />
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         <Topbar />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-6">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background/50 p-6 custom-scrollbar">
           <Outlet />
         </main>
       </div>

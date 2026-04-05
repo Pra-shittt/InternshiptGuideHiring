@@ -21,7 +21,7 @@ import resumeRoutes from './routes/resumeRoutes.js';
 import leaderboardRoutes from './routes/leaderboardRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import interviewRoutes from './routes/interviewRoutes.js';
-import assessmentRoutes from './routes/assessmentRoutes.js';
+// Assessment routes removed
 import jobRoutes from './routes/jobRoutes.js';
 import applicationRoutes from './routes/applicationRoutes.js';
 
@@ -49,7 +49,7 @@ app.use('/api/resume', resumeRoutes);         // Resume upload
 app.use('/api/leaderboard', leaderboardRoutes); // Leaderboard
 app.use('/api/admin', adminRoutes);           // Admin management
 app.use('/api/interviews', interviewRoutes);  // Interview scheduling & management
-app.use('/api/assessments', assessmentRoutes); // Assessment submission
+// Assessment routes removed
 app.use('/api/jobs', jobRoutes);              // Job postings CRUD
 app.use('/api/applications', applicationRoutes); // Job applications
 

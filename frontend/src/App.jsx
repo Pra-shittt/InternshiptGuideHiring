@@ -10,9 +10,9 @@ import { MockTest } from './pages/candidate/MockTest';
 import { CompanyPrep } from './pages/candidate/CompanyPrep';
 import { PracticeMode } from './pages/candidate/PracticeMode';
 import { PracticeQuestionsPage } from './pages/candidate/PracticeQuestionsPage';
+import { McqSolve } from './pages/candidate/McqSolve';
 import { Results } from './pages/candidate/Results';
 import { Performance } from './pages/candidate/Performance';
-import { Assessment } from './pages/candidate/Assessment';
 import { Leaderboard } from './pages/Leaderboard';
 
 import { RecruiterDashboard } from './pages/recruiter/Dashboard';
@@ -23,6 +23,7 @@ import { CandidateList } from './pages/recruiter/CandidateList';
 import { AdminDashboard } from './pages/admin/Dashboard';
 import { ManageUsers } from './pages/admin/ManageUsers';
 import { ManageContent } from './pages/admin/ManageContent';
+import { ManageCompanies } from './pages/admin/ManageCompanies';
 
 export default function App() {
   return (
@@ -37,13 +38,13 @@ export default function App() {
         <Route path="/candidate/companies" element={<CompanyPrep />} />
         <Route path="/candidate/practice" element={<PracticeQuestionsPage />} />
         <Route path="/candidate/practice/mock" element={<PracticeMode />} />
+        <Route path="/candidate/mcq/:id" element={<McqSolve />} />
         <Route path="/candidate/results" element={<Results />} />
         <Route path="/candidate/performance" element={<Performance />} />
         <Route path="/candidate/leaderboard" element={<Leaderboard />} />
         <Route path="/candidate/interview/:id" element={<VideoInterview />} />
         <Route path="/candidate/test" element={<MockTest />} />
         <Route path="/candidate/test/:id" element={<MockTest />} />
-        <Route path="/candidate/assessment" element={<Assessment />} />
       </Route>
 
       {/* Recruiter Routes */}
@@ -59,6 +60,7 @@ export default function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/users" element={<ManageUsers />} />
         <Route path="/admin/content" element={<ManageContent />} />
+        <Route path="/admin/companies" element={<ManageCompanies />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

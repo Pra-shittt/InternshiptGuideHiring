@@ -7,10 +7,28 @@ const generateToken = (id) => {
   });
 };
 
+// Simple email format validator
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 // POST /api/auth/signup
 export const signup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Please provide name, email, and password' });
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ success: false, message: 'Invalid email address' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
+    }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -52,14 +70,18 @@ export const login = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Please provide email and password' });
     }
 
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ success: false, message: 'Invalid email address' });
+    }
+
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      return res.status(401).json({ success: false, message: 'No account found with this email' });
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      return res.status(401).json({ success: false, message: 'Incorrect password' });
     }
 
     const token = generateToken(user._id);
