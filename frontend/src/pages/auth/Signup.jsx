@@ -4,7 +4,8 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { Card } from "../../components/ui/Card";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { UserPlus, AlertCircle, Zap, Eye, EyeOff } from "lucide-react";
+import { UserPlus, AlertCircle, Eye, EyeOff } from "lucide-react";
+import logoImg from "../../assets/logo.png";
 
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -17,13 +18,20 @@ export function Signup() {
   const [role, setRole] = useState("candidate");
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setEmailError("");
+    setPasswordError("");
 
     if (!isValidEmail(email)) {
       setEmailError("Invalid email address");
+      return;
+    }
+
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
       return;
     }
 
@@ -37,20 +45,20 @@ export function Signup() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background"></div>
+
       <Card className="w-full max-w-md p-8 space-y-8 relative z-10 border-border/50 bg-card/50 backdrop-blur-xl">
         <div className="text-center space-y-2">
-          <div className="mx-auto w-12 h-12 bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center rounded-xl shadow-lg mb-6">
-            <Zap className="w-6 h-6 text-white" />
+          <div className="mx-auto w-12 h-12 flex items-center justify-center rounded-xl shadow-lg mb-6 overflow-hidden">
+            <img src={logoImg} alt="Learn2Hire" className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-3xl font-bold text-gradient">Create Account</h1>
-          <p className="text-slate-400 text-sm">Join HireFlow to start your journey</p>
+          <h1 className="text-3xl font-bold text-primary">Create Account</h1>
+          <p className="text-slate-400 text-sm">Join Learn2Hire to start your journey</p>
         </div>
 
-        {(error || emailError) && (
+        {(error || emailError || passwordError) && (
           <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm">
             <AlertCircle className="w-4 h-4 shrink-0" />
-            {emailError || error}
+            {emailError || passwordError || error}
           </div>
         )}
 
@@ -85,7 +93,7 @@ export function Signup() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Min 6 characters"
                 value={password}
-                onChange={(e) => { setPassword(e.target.value); clearError(); }}
+                onChange={(e) => { setPassword(e.target.value); clearError(); setPasswordError(""); }}
                 required
                 minLength={6}
                 className="pr-10"

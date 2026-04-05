@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import {
   Video, Brain, Target, Users, ArrowRight, CheckCircle,
-  BarChart3, Shield, Zap, Star, ChevronRight
+  BarChart3, Shield, Star, ChevronRight
 } from "lucide-react";
+import logoImg from "../assets/logo.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -54,20 +55,13 @@ const companies = ["Google", "Amazon", "Microsoft", "Meta", "Apple", "Netflix", 
 export function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-[100px] animate-pulse-glow" />
-        <div className="absolute top-60 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse-glow" style={{ animationDelay: "1s" }} />
-        <div className="absolute bottom-40 left-1/3 w-80 h-80 bg-cyan-500/10 rounded-full blur-[100px] animate-pulse-glow" style={{ animationDelay: "2s" }} />
-      </div>
+
 
       {/* Navbar */}
       <nav className="relative z-10 flex items-center justify-between px-6 lg:px-16 py-5 border-b border-border/50 glass-strong">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-gradient-to-br from-primary to-purple-500 rounded-lg flex items-center justify-center shadow-lg">
-            <Zap className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-xl font-bold text-gradient">HireFlow</span>
+          <img src={logoImg} alt="Learn2Hire" className="w-9 h-9 rounded-lg object-cover shadow-lg" />
+          <span className="text-xl font-bold text-primary">Learn2Hire</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted">
           <a href="#features" className="hover:text-foreground transition-colors">Features</a>
@@ -105,7 +99,7 @@ export function LandingPage() {
           className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight"
         >
           <span className="text-foreground">Prepare.</span>{" "}
-          <span className="text-gradient">Assess.</span>{" "}
+          <span className="text-primary">Assess.</span>{" "}
           <span className="text-foreground">Get Hired.</span>
         </motion.h1>
 
@@ -166,7 +160,7 @@ export function LandingPage() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Everything You Need to <span className="text-gradient">Succeed</span>
+            Everything You Need to <span className="text-primary">Succeed</span>
           </h2>
           <p className="mt-4 text-muted max-w-xl mx-auto">
             From preparation to placement — we've got every step covered.
@@ -208,7 +202,7 @@ export function LandingPage() {
                 custom={i}
                 className="text-center"
               >
-                <p className="text-4xl md:text-5xl font-extrabold text-gradient">{s.value}</p>
+                <p className="text-4xl md:text-5xl font-extrabold text-primary">{s.value}</p>
                 <p className="mt-2 text-muted text-sm font-medium">{s.label}</p>
               </motion.div>
             ))}
@@ -253,12 +247,12 @@ export function LandingPage() {
           variants={fadeUp}
           className="rounded-2xl glass-strong p-12 md:p-16 relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-purple-500/10 pointer-events-none" />
+        
           <h2 className="text-3xl md:text-4xl font-bold text-foreground relative z-10">
             Ready to Start Your Journey?
           </h2>
           <p className="mt-4 text-muted max-w-lg mx-auto relative z-10">
-            Join thousands of candidates and recruiters already using HireFlow.
+            Join thousands of candidates and recruiters already using Learn2Hire.
           </p>
           <Link to="/signup" className="relative z-10">
             <Button className="mt-8 text-base px-10 py-6 gap-2 shadow-xl shadow-primary/30 glow-primary">
@@ -271,12 +265,10 @@ export function LandingPage() {
       {/* Footer */}
       <footer className="relative z-10 border-t border-border/50 py-8 text-center text-sm text-muted">
         <div className="flex items-center justify-center gap-2 mb-2">
-          <div className="w-6 h-6 bg-gradient-to-br from-primary to-purple-500 rounded-md flex items-center justify-center">
-            <Zap className="w-3.5 h-3.5 text-white" />
-          </div>
-          <span className="font-bold text-foreground">HireFlow</span>
+          <img src={logoImg} alt="Learn2Hire" className="w-6 h-6 rounded-md object-cover" />
+          <span className="font-bold text-foreground">Learn2Hire</span>
         </div>
-        <p>© 2026 HireFlow. Smart Interview Preparation, Assessment & Talent Hiring.</p>
+        <p>© 2026 Learn2Hire. Smart Interview Preparation, Assessment & Talent Hiring.</p>
       </footer>
     </div>
   );

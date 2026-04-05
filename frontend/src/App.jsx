@@ -23,7 +23,7 @@ import { CandidateList } from './pages/recruiter/CandidateList';
 import { AdminDashboard } from './pages/admin/Dashboard';
 import { ManageUsers } from './pages/admin/ManageUsers';
 import { ManageContent } from './pages/admin/ManageContent';
-import { ManageCompanies } from './pages/admin/ManageCompanies';
+
 
 export default function App() {
   return (
@@ -60,7 +60,7 @@ export default function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/users" element={<ManageUsers />} />
         <Route path="/admin/content" element={<ManageContent />} />
-        <Route path="/admin/companies" element={<ManageCompanies />} />
+
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -2,9 +2,10 @@ import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import {
   LayoutDashboard, Users, UserPlus, Briefcase, Video, LogOut,
-  CheckCircle, Trophy, BarChart3, Code, Zap, Building2
+  CheckCircle, Trophy, BarChart3, Code
 } from "lucide-react";
 import { cn } from "../utils/cn";
+import logoImg from "../assets/logo.png";
 
 const candidateLinks = [
   { name: 'Dashboard', to: '/candidate/dashboard', icon: LayoutDashboard },
@@ -26,7 +27,6 @@ const adminLinks = [
   { name: 'Dashboard', to: '/admin/dashboard', icon: LayoutDashboard },
   { name: 'Manage Users', to: '/admin/users', icon: Users },
   { name: 'Manage Content', to: '/admin/content', icon: Code },
-  { name: 'Manage Companies', to: '/admin/companies', icon: Building2 },
 ];
 
 export function Sidebar() {
@@ -53,11 +53,9 @@ export function Sidebar() {
       {/* Logo — clickable, navigates to dashboard */}
       <Link to={dashboardPath} className="block p-6 border-b border-border group">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-gradient-to-br from-primary to-purple-500 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
-            <Zap className="w-5 h-5 text-white" />
-          </div>
-          <h1 className="text-xl font-bold text-gradient group-hover:opacity-80 transition-opacity">
-            HireFlow
+          <img src={logoImg} alt="Learn2Hire" className="w-9 h-9 rounded-lg object-cover shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow" />
+          <h1 className="text-xl font-bold text-primary group-hover:opacity-80 transition-opacity">
+            Learn2Hire
           </h1>
         </div>
       </Link>
