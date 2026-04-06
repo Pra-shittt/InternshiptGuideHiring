@@ -43,10 +43,10 @@ export function PracticeQuestionsPage() {
     questionAPI.getAll(params)
       .then((res) => {
         const data = res.data.data || [];
-        // Normalize questions to a consistent shape for display
+        // Normalize questions: use _id (MongoDB) or id (Spring) — handle both
         setQuestions(data.map((q) => ({
           ...q,
-          id: q._id,
+          id: q._id || q.id,
           tags: [q.topic, q.company].filter(Boolean),
           description: q.questionText || q.description || `${q.type} problem — ${q.topic}`,
           leetcodeUrl: q.link || (q.platform === "LeetCode" ? `https://leetcode.com/problems/${q.title.toLowerCase().replace(/\s+/g, "-")}/` : null),
@@ -127,7 +127,7 @@ export function PracticeQuestionsPage() {
               </div>
               <TrendingUp className="w-8 h-8 text-primary/20" />
             </div>
-            <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-[#f5f0eb] rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progressPct}%` }}
@@ -148,7 +148,7 @@ export function PracticeQuestionsPage() {
             <Card className={`p-5 border-l-4 border-l-${d.color}-500`}>
               <p className="text-xs font-medium text-muted uppercase tracking-wider">{d.label}</p>
               <p className="text-2xl font-bold text-foreground mt-1">{d.solved}/{d.total}</p>
-              <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden mt-2">
+              <div className="w-full h-1.5 bg-[#f5f0eb] rounded-full overflow-hidden mt-2">
                 <div className={`h-full rounded-full bg-${d.color}-500`} style={{ width: `${d.total > 0 ? (d.solved / d.total) * 100 : 0}%`, transition: "width 0.8s ease" }} />
               </div>
             </Card>
@@ -167,7 +167,7 @@ export function PracticeQuestionsPage() {
               placeholder="Search by title, topic, or company..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-slate-600"
+              className="w-full h-10 pl-10 pr-4 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 placeholder:text-slate-500"
             />
           </div>
 
@@ -218,7 +218,7 @@ export function PracticeQuestionsPage() {
             <button
               onClick={() => setViewMode("grid")}
               className={`h-10 w-10 flex items-center justify-center transition-colors ${
-                viewMode === "grid" ? "bg-primary/10 text-primary" : "text-slate-500 hover:text-foreground hover:bg-slate-800/50"
+                viewMode === "grid" ? "bg-primary/10 text-primary" : "text-slate-500 hover:text-[#1e293b] hover:bg-[#f5f0eb]"
               }`}
             >
               <LayoutGrid className="w-4 h-4" />
@@ -226,7 +226,7 @@ export function PracticeQuestionsPage() {
             <button
               onClick={() => setViewMode("list")}
               className={`h-10 w-10 flex items-center justify-center transition-colors border-l border-border ${
-                viewMode === "list" ? "bg-primary/10 text-primary" : "text-slate-500 hover:text-foreground hover:bg-slate-800/50"
+                viewMode === "list" ? "bg-primary/10 text-primary" : "text-slate-500 hover:text-[#1e293b] hover:bg-[#f5f0eb]"
               }`}
             >
               <List className="w-4 h-4" />
@@ -246,7 +246,7 @@ export function PracticeQuestionsPage() {
                   className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium border transition-all ${
                     isActive
                       ? "bg-primary/10 text-primary border-primary/30 shadow-sm"
-                      : "bg-slate-800/40 text-slate-400 border-slate-700/50 hover:bg-slate-800 hover:text-slate-300"
+                      : "bg-[#f5f0eb] text-slate-500 border-[#e2ddd8] hover:bg-[#f5f0eb] hover:text-[#1e293b]"
                   }`}
                 >
                   <Hash className="w-2.5 h-2.5" />
@@ -283,7 +283,7 @@ export function PracticeQuestionsPage() {
       {/* Error State */}
       {error && !loading && (
         <div className="text-center py-16">
-          <p className="text-red-400 font-medium">{error}</p>
+          <p className="text-red-600 font-medium">{error}</p>
           <Button onClick={() => window.location.reload()} variant="secondary" className="mt-4">Retry</Button>
         </div>
       )}
@@ -299,9 +299,9 @@ export function PracticeQuestionsPage() {
               exit={{ opacity: 0 }}
               className="text-center py-16"
             >
-              <Code className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+              <Code className="w-12 h-12 text-slate-500 mx-auto mb-3" />
               <p className="text-muted font-medium">No questions match your filters</p>
-              <p className="text-sm text-slate-600 mt-1">Try adjusting your search or filters</p>
+              <p className="text-sm text-slate-500 mt-1">Try adjusting your search or filters</p>
             </motion.div>
           ) : viewMode === "grid" ? (
             <motion.div
@@ -337,10 +337,10 @@ export function PracticeQuestionsPage() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.03 }}
-                  className="group flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:bg-slate-800/40 hover:border-border/80 transition-all"
+                  className="group flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:bg-[#f5f0eb] hover:border-border/80 transition-all"
                 >
                   {/* Type badge */}
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${q.type === "MCQ" ? "bg-blue-500/10 text-blue-400" : "bg-purple-500/10 text-purple-400"}`}>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${q.type === "MCQ" ? "bg-blue-500/10 text-blue-400" : "bg-purple-50 text-purple-600"}`}>
                     {q.type}
                   </span>
 
@@ -359,7 +359,7 @@ export function PracticeQuestionsPage() {
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {q.tags.map((tag) => (
-                        <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/60 text-slate-500 border border-slate-700/40">
+                        <span key={tag} className="text-[10px] px-1.5 py-0.5 rounded bg-[#f5f0eb] text-slate-500 border border-[#e2ddd8]">
                           {tag}
                         </span>
                       ))}
@@ -372,8 +372,8 @@ export function PracticeQuestionsPage() {
                       onClick={() => toggleBookmark(q.id)}
                       className={`p-1.5 rounded-lg transition-all ${
                         bookmarkedSet.has(q.id)
-                          ? "text-amber-400 bg-amber-500/10"
-                          : "text-slate-600 hover:text-slate-400 hover:bg-slate-800"
+                          ? "text-amber-600 bg-amber-50"
+                          : "text-slate-500 hover:text-[#1e293b] hover:bg-[#f5f0eb]"
                       }`}
                     >
                       {bookmarkedSet.has(q.id) ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}

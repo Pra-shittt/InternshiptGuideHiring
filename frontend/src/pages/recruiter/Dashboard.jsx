@@ -91,16 +91,16 @@ export function RecruiterDashboard() {
                 </Badge>
               )}
             </div>
-            <Button variant="ghost" size="sm" onClick={() => navigate('/recruiter/candidates')} className="gap-1 text-muted hover:text-foreground">
+            <Button variant="ghost" size="sm" onClick={() => navigate('/recruiter/candidates')} className="gap-1 text-muted hover:text-[#1e293b]">
               View All <ArrowUpRight className="w-4 h-4" />
             </Button>
           </div>
 
           {interviews.length === 0 && !loading && (
             <div className="text-center py-12">
-              <Calendar className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+              <Calendar className="w-12 h-12 text-slate-500 mx-auto mb-3" />
               <p className="text-muted font-medium">No interviews scheduled yet</p>
-              <p className="text-sm text-slate-600 mt-1">Schedule your first interview to get started</p>
+              <p className="text-sm text-slate-500 mt-1">Schedule your first interview to get started</p>
               <Button onClick={() => navigate('/recruiter/schedule')} className="mt-4 gap-2">
                 <Calendar className="w-4 h-4" /> Schedule Interview
               </Button>
@@ -109,7 +109,7 @@ export function RecruiterDashboard() {
 
           <div className="space-y-2">
             {interviews.slice(0, 8).map((i) => (
-              <div key={i._id} className="flex items-center justify-between p-4 bg-background/50 rounded-xl border border-border hover:border-border/80 hover:bg-slate-800/30 transition-all group">
+              <div key={i._id} className="flex items-center justify-between p-4 bg-background/50 rounded-xl border border-border hover:border-border/80 hover:bg-[#f5f0eb]/50 transition-all group">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-sm font-bold text-primary">
                     {(i.candidateId?.name || "?")[0]}
@@ -151,7 +151,7 @@ export function RecruiterDashboard() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-lg font-semibold text-foreground">Your Candidates</h2>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/recruiter/candidates')} className="gap-1 text-muted hover:text-foreground">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/recruiter/candidates')} className="gap-1 text-muted hover:text-[#1e293b]">
                 View All <ArrowUpRight className="w-4 h-4" />
               </Button>
             </div>
@@ -168,10 +168,10 @@ export function RecruiterDashboard() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`text-sm font-bold ${c.avgScore >= 70 ? 'text-green-400' : c.avgScore >= 50 ? 'text-amber-400' : 'text-slate-400'}`}>
+                    <p className={`text-sm font-bold ${c.avgScore >= 70 ? 'text-green-600' : c.avgScore >= 50 ? 'text-amber-600' : 'text-slate-500'}`}>
                       {c.avgScore}%
                     </p>
-                    <p className="text-[10px] text-slate-600">{c.totalAttempts} tests</p>
+                    <p className="text-[10px] text-slate-500">{c.totalAttempts} tests</p>
                   </div>
                 </div>
               ))}

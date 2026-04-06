@@ -18,15 +18,13 @@ export function SlideOver({ open, onClose, title, children, className }) {
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
             onClick={onClose}
           />
-          {/* Panel */}
           <motion.div
             ref={panelRef}
             initial={{ x: "100%" }}
@@ -34,15 +32,15 @@ export function SlideOver({ open, onClose, title, children, className }) {
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
             className={cn(
-              "fixed right-0 top-0 h-full w-[480px] max-w-full bg-card border-l border-border z-50 flex flex-col shadow-2xl",
+              "fixed right-0 top-0 h-full w-[480px] max-w-full bg-white border-l border-[#e2ddd8] z-50 flex flex-col shadow-2xl",
               className
             )}
           >
-            <div className="flex items-center justify-between p-6 border-b border-border shrink-0">
-              <h2 className="text-lg font-bold text-foreground">{title}</h2>
+            <div className="flex items-center justify-between p-6 border-b border-[#e2ddd8] shrink-0">
+              <h2 className="text-lg font-bold text-[#1e293b]">{title}</h2>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg hover:bg-slate-800 transition-colors text-slate-400 hover:text-foreground"
+                className="p-2 rounded-lg hover:bg-[#f5f0eb] transition-colors text-slate-600 hover:text-[#1e293b]"
               >
                 <X className="w-5 h-5" />
               </button>

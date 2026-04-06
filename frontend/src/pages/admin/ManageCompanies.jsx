@@ -102,13 +102,13 @@ export function ManageCompanies() {
               <h2 className="text-lg font-semibold text-foreground">
                 {editingId ? "Edit Company" : "Add New Company"}
               </h2>
-              <button onClick={resetForm} className="text-slate-400 hover:text-foreground transition-colors">
+              <button onClick={resetForm} className="text-slate-500 hover:text-[#1e293b] transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {formError && (
-              <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm mb-4">
+              <div className="flex items-center gap-2 bg-red-50 border border-red-500/20 text-red-600 px-4 py-3 rounded-lg text-sm mb-4">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 {formError}
               </div>
@@ -117,7 +117,7 @@ export function ManageCompanies() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-300">Company Name *</label>
+                  <label className="text-sm font-medium text-slate-500">Company Name *</label>
                   <Input
                     placeholder="e.g. Google"
                     value={formData.name}
@@ -126,7 +126,7 @@ export function ManageCompanies() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-300">Industry</label>
+                  <label className="text-sm font-medium text-slate-500">Industry</label>
                   <Input
                     placeholder="e.g. Technology"
                     value={formData.industry}
@@ -135,16 +135,16 @@ export function ManageCompanies() {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Description</label>
+                <label className="text-sm font-medium text-slate-500">Description</label>
                 <textarea
                   placeholder="Brief description of the company..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full bg-background border border-border rounded-lg p-3 text-sm min-h-[80px] focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none text-foreground placeholder:text-slate-600"
+                  className="w-full bg-background border border-border rounded-lg p-3 text-sm min-h-[80px] focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none text-foreground placeholder:text-slate-500"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Website</label>
+                <label className="text-sm font-medium text-slate-500">Website</label>
                 <Input
                   placeholder="https://example.com"
                   value={formData.website}
@@ -167,7 +167,7 @@ export function ManageCompanies() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-border bg-slate-800/30">
+              <tr className="border-b border-border bg-[#f5f0eb]/50">
                 <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Company</th>
                 <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Industry</th>
                 <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Website</th>
@@ -188,7 +188,7 @@ export function ManageCompanies() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.03 }}
-                  className="hover:bg-slate-800/30 transition-colors group"
+                  className="hover:bg-[#f5f0eb]/50 transition-colors group"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
@@ -239,7 +239,7 @@ export function ManageCompanies() {
                           <Button size="sm" variant="ghost" onClick={() => openEdit(company)} title="Edit" className="h-8 w-8 p-0">
                             <Pencil className="w-3.5 h-3.5" />
                           </Button>
-                          <Button size="sm" variant="ghost" onClick={() => setDeleteConfirm(company._id)} title="Delete" className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10">
+                          <Button size="sm" variant="ghost" onClick={() => setDeleteConfirm(company._id)} title="Delete" className="h-8 w-8 p-0 text-red-600 hover:text-red-300 hover:bg-red-50">
                             <Trash2 className="w-3.5 h-3.5" />
                           </Button>
                         </>

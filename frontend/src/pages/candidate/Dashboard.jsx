@@ -18,7 +18,7 @@ const fadeUp = {
   }),
 };
 
-function ProgressRing({ percentage, size = 80, stroke = 8, color = "#3b82f6" }) {
+function ProgressRing({ percentage, size = 80, stroke = 8, color = "#1e3a5f" }) {
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (percentage / 100) * circumference;
@@ -26,7 +26,7 @@ function ProgressRing({ percentage, size = 80, stroke = 8, color = "#3b82f6" }) 
   return (
     <div className="relative" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(51,65,85,0.5)" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(226,221,216,0.8)" strokeWidth={stroke} />
         <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={color} strokeWidth={stroke}
           strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset}
           style={{ transition: "stroke-dashoffset 1s ease" }}
@@ -80,7 +80,7 @@ export function CandidateDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {statCards.map((card, i) => (
           <motion.div key={card.label} initial="hidden" animate="visible" variants={fadeUp} custom={i}>
-            <Card className={`p-5 ${card.color} border-l-4 hover:bg-slate-800/50 transition-colors`}>
+            <Card className={`p-5 ${card.color} border-l-4 hover:bg-[#f5f0eb] transition-colors`}>
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-medium text-muted text-sm">{card.label}</h3>
@@ -110,12 +110,12 @@ export function CandidateDashboard() {
                 <button
                   key={a.label}
                   onClick={() => navigate(a.to)}
-                  className="group flex flex-col items-center gap-3 p-5 rounded-xl border border-border bg-slate-800/30 hover:bg-slate-800/60 hover:border-primary/30 transition-all"
+                  className="group flex flex-col items-center gap-3 p-5 rounded-xl border border-border bg-[#f5f0eb]/50 hover:bg-[#f5f0eb] hover:border-primary/30 transition-all"
                 >
                   <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${a.color} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform`}>
                     <a.icon className="w-5 h-5 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-muted group-hover:text-foreground transition-colors">{a.label}</span>
+                  <span className="text-sm font-medium text-muted group-hover:text-[#1e293b] transition-colors">{a.label}</span>
                 </button>
               ))}
             </div>
@@ -131,7 +131,7 @@ export function CandidateDashboard() {
               {recentActivity.slice(0, 5).map((a, i) => (
                 <div key={i} className="flex items-center justify-between p-4 bg-background rounded-lg border border-border hover:border-border/80 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${a.percentage >= 70 ? 'bg-green-500/10 text-green-500' : a.percentage >= 50 ? 'bg-yellow-500/10 text-yellow-500' : 'bg-red-500/10 text-red-500'}`}>
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${a.percentage >= 70 ? 'bg-green-50 text-green-500' : a.percentage >= 50 ? 'bg-amber-50 text-amber-600' : 'bg-red-50 text-red-500'}`}>
                       <Target className="w-5 h-5" />
                     </div>
                     <div>

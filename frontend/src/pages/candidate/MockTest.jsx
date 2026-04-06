@@ -75,9 +75,9 @@ export function MockTest() {
             <Play className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-3xl font-bold text-foreground">Start Mock Test</h1>
-          <p className="text-slate-400">Randomly selected MCQ questions will be presented. Answer within the time limit!</p>
+          <p className="text-slate-500">Randomly selected MCQ questions will be presented. Answer within the time limit!</p>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300">Number of Questions</label>
+            <label className="text-sm font-medium text-slate-500">Number of Questions</label>
             <select value={testCount} onChange={(e) => setTestCount(Number(e.target.value))} className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
               <option value={5}>5 Questions (5 min)</option>
               <option value={10}>10 Questions (10 min)</option>
@@ -102,15 +102,15 @@ export function MockTest() {
           <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto mt-4">
             <div>
               <p className="text-4xl font-bold text-primary">{results.percentage}%</p>
-              <p className="text-slate-400 text-sm mt-1">Score</p>
+              <p className="text-slate-500 text-sm mt-1">Score</p>
             </div>
             <div>
               <p className="text-4xl font-bold text-green-500">{results.correctAnswers}</p>
-              <p className="text-slate-400 text-sm mt-1">Correct</p>
+              <p className="text-slate-500 text-sm mt-1">Correct</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-red-400">{results.wrongAnswers}</p>
-              <p className="text-slate-400 text-sm mt-1">Wrong</p>
+              <p className="text-4xl font-bold text-red-600">{results.wrongAnswers}</p>
+              <p className="text-slate-500 text-sm mt-1">Wrong</p>
             </div>
           </div>
         </Card>
@@ -120,12 +120,12 @@ export function MockTest() {
           {results.results.map((r, i) => (
             <div key={i} className={`p-4 rounded-xl border ${r.isCorrect ? 'border-green-500/20 bg-green-500/5' : 'border-red-500/20 bg-red-500/5'}`}>
               <div className="flex items-start gap-3">
-                {r.isCorrect ? <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" /> : <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />}
+                {r.isCorrect ? <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" /> : <XCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />}
                 <div className="flex-1">
                   <h4 className="font-medium text-foreground">{r.title}</h4>
-                  <p className="text-sm text-slate-400 mt-1">Your answer: <span className={r.isCorrect ? "text-green-400" : "text-red-400"}>{r.selectedAnswer || "No answer"}</span></p>
-                  {!r.isCorrect && <p className="text-sm text-green-400 mt-1">Correct: {r.correctAnswer}</p>}
-                  {r.explanation && <p className="text-sm text-slate-400 mt-2 italic">{r.explanation}</p>}
+                  <p className="text-sm text-slate-500 mt-1">Your answer: <span className={r.isCorrect ? "text-green-600" : "text-red-600"}>{r.selectedAnswer || "No answer"}</span></p>
+                  {!r.isCorrect && <p className="text-sm text-green-600 mt-1">Correct: {r.correctAnswer}</p>}
+                  {r.explanation && <p className="text-sm text-slate-500 mt-2 italic">{r.explanation}</p>}
                 </div>
               </div>
             </div>
@@ -148,10 +148,10 @@ export function MockTest() {
       <Card className="flex items-center justify-between p-4 shrink-0 shadow-sm">
         <div>
           <h2 className="text-xl font-bold text-foreground">Mock Test</h2>
-          <p className="text-sm text-slate-400 mt-1">Question {currentIdx + 1} of {questions.length}</p>
+          <p className="text-sm text-slate-500 mt-1">Question {currentIdx + 1} of {questions.length}</p>
         </div>
         <div className="flex items-center gap-6">
-          <div className={`flex items-center gap-2 font-mono text-lg font-medium px-4 py-2 rounded-lg border shadow-inner ${timeLeft < 60 ? 'text-red-500 bg-red-500/10 border-red-500/20' : 'text-amber-500 bg-amber-500/10 border-amber-500/20'}`}>
+          <div className={`flex items-center gap-2 font-mono text-lg font-medium px-4 py-2 rounded-lg border shadow-inner ${timeLeft < 60 ? 'text-red-500 bg-red-50 border-red-500/20' : 'text-amber-500 bg-amber-50 border-amber-500/20'}`}>
             <Clock className="w-5 h-5 flex-shrink-0" />
             {formatTime(timeLeft)}
           </div>
@@ -167,11 +167,11 @@ export function MockTest() {
             <div>
               <h3 className="text-2xl font-bold text-foreground">{currentIdx + 1}. {question?.title}</h3>
               <div className="flex gap-2 mt-3">
-                <span className={`px-2.5 py-1 rounded text-xs font-semibold border ${question?.difficulty === 'Easy' ? 'bg-green-500/10 text-green-500 border-green-500/20' : question?.difficulty === 'Medium' ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20' : 'bg-red-500/10 text-red-500 border-red-500/20'}`}>{question?.difficulty}</span>
-                <span className="bg-slate-800 text-slate-300 px-2.5 py-1 rounded text-xs font-semibold border border-slate-700">{question?.topic}</span>
+                <span className={`px-2.5 py-1 rounded text-xs font-semibold border ${question?.difficulty === 'Easy' ? 'bg-green-50 text-green-500 border-green-500/20' : question?.difficulty === 'Medium' ? 'bg-amber-50 text-amber-600 border-yellow-500/20' : 'bg-red-50 text-red-500 border-red-500/20'}`}>{question?.difficulty}</span>
+                <span className="bg-[#f5f0eb] text-slate-500 px-2.5 py-1 rounded text-xs font-semibold border border-[#e2ddd8]">{question?.topic}</span>
               </div>
             </div>
-            <p className="text-slate-300 leading-relaxed text-base">{question?.questionText}</p>
+            <p className="text-slate-500 leading-relaxed text-base">{question?.questionText}</p>
 
             <div className="space-y-3 mt-6">
               {question?.options?.map((option, idx) => (
@@ -181,7 +181,7 @@ export function MockTest() {
                   className={`w-full text-left p-4 rounded-xl border transition-all duration-200 ${
                     answers[question._id] === option
                       ? 'border-primary bg-primary/10 text-primary shadow-sm'
-                      : 'border-border bg-background text-slate-300 hover:border-slate-600 hover:bg-slate-800/50'
+                      : 'border-border bg-background text-slate-500 hover:border-slate-600 hover:bg-[#f5f0eb]'
                   }`}
                 >
                   <span className="font-medium">{String.fromCharCode(65 + idx)}.</span> {option}
@@ -193,7 +193,7 @@ export function MockTest() {
 
         {/* Question navigation sidebar */}
         <Card className="w-48 p-4 shadow-sm shrink-0">
-          <h4 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">Questions</h4>
+          <h4 className="text-sm font-semibold text-slate-500 mb-3 uppercase tracking-wider">Questions</h4>
           <div className="grid grid-cols-4 gap-2">
             {questions.map((q, i) => (
               <button
@@ -203,8 +203,8 @@ export function MockTest() {
                   i === currentIdx
                     ? 'bg-primary text-white shadow-sm'
                     : answers[q._id]
-                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                    : 'bg-slate-800 text-slate-400 border border-border hover:border-slate-600'
+                    ? 'bg-green-500/20 text-green-600 border border-green-500/30'
+                    : 'bg-[#f5f0eb] text-slate-500 border border-border hover:border-slate-600'
                 }`}
               >
                 {i + 1}
@@ -218,7 +218,7 @@ export function MockTest() {
         <Button variant="secondary" onClick={() => setCurrentIdx(Math.max(0, currentIdx - 1))} disabled={currentIdx === 0} className="bg-card shadow-sm">
           <ChevronLeft className="w-4 h-4 mr-2" /> Previous
         </Button>
-        <div className="text-sm font-semibold text-slate-400">
+        <div className="text-sm font-semibold text-slate-500">
           {Object.keys(answers).length} / {questions.length} answered
         </div>
         <Button onClick={() => setCurrentIdx(Math.min(questions.length - 1, currentIdx + 1))} disabled={currentIdx === questions.length - 1} className="shadow-sm shadow-primary/20">

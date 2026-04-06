@@ -1,269 +1,134 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import {
-  Video, Brain, Target, Users, ArrowRight, CheckCircle,
-  BarChart3, Shield, Star, ChevronRight
+  Video, Brain, Target, ArrowRight,
+  BarChart3, ChevronRight
 } from "lucide-react";
 import logoImg from "../assets/logo.png";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" },
-  }),
-};
 
 const features = [
   {
     icon: Brain,
-    title: "AI-Powered Mock Interviews",
-    desc: "Practice with intelligent question banks tailored to top companies. Get instant feedback on your performance.",
+    title: "Smart Mock Interviews",
+    desc: "Practice with curated question banks from top companies. Sharpen your skills with real-world scenarios.",
     color: "from-blue-500 to-cyan-500",
   },
   {
     icon: Target,
     title: "Online Assessments",
-    desc: "Take timed coding challenges and MCQ tests. Track your progress with detailed analytics.",
+    desc: "Take timed MCQ tests and coding challenges. Track your progress with detailed analytics.",
     color: "from-purple-500 to-pink-500",
   },
   {
     icon: Video,
     title: "Live Video Interviews",
-    desc: "Real-time video calls with screen sharing. Recruiters can take notes and rate candidates live.",
+    desc: "Real-time video calls with recruiters. Notes, ratings, and structured interview flow built in.",
     color: "from-amber-500 to-orange-500",
   },
   {
     icon: BarChart3,
-    title: "Smart Analytics",
-    desc: "Comprehensive dashboards for candidates and recruiters. Hiring funnel, skill heatmaps, and more.",
+    title: "Job Applications",
+    desc: "Browse and apply to jobs posted by recruiters. Track your applications from applied to hired.",
     color: "from-green-500 to-emerald-500",
   },
 ];
 
-const stats = [
-  { value: "10,000+", label: "Active Candidates" },
-  { value: "500+", label: "Partner Companies" },
-  { value: "95%", label: "Placement Rate" },
-  { value: "50K+", label: "Interviews Conducted" },
-];
-
-const companies = ["Google", "Amazon", "Microsoft", "Meta", "Apple", "Netflix", "Spotify", "Uber"];
-
 export function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-
-
       {/* Navbar */}
-      <nav className="relative z-10 flex items-center justify-between px-6 lg:px-16 py-5 border-b border-border/50 glass-strong">
+      <nav className="flex items-center justify-between px-6 lg:px-16 py-5 bg-white/90 backdrop-blur-md border-b border-[#e2ddd8] shadow-sm">
         <div className="flex items-center gap-3">
           <img src={logoImg} alt="Learn2Hire" className="w-9 h-9 rounded-lg object-cover shadow-lg" />
           <span className="text-xl font-bold text-primary">Learn2Hire</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted">
-          <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-          <a href="#stats" className="hover:text-foreground transition-colors">Stats</a>
-          <a href="#companies" className="hover:text-foreground transition-colors">Companies</a>
+          <a href="#features" className="hover:text-[#1e293b] transition-colors">Features</a>
+          <a href="#about" className="hover:text-[#1e293b] transition-colors">About</a>
         </div>
         <div className="flex items-center gap-3">
           <Link to="/login">
             <Button variant="ghost" className="text-sm">Sign In</Button>
           </Link>
           <Link to="/signup">
-            <Button className="text-sm shadow-lg shadow-primary/25">Get Started</Button>
+            <Button className="text-sm">Get Started</Button>
           </Link>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative z-10 max-w-6xl mx-auto px-6 pt-20 pb-28 text-center">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          custom={0}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium mb-8"
-        >
-          <Star className="w-4 h-4" />
-          #1 Smart Hiring Platform for Tech Talent
-        </motion.div>
-
-        <motion.h1
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          custom={1}
-          className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight"
-        >
+      {/* Hero Section — Clean, minimal */}
+      <section className="max-w-5xl mx-auto px-6 pt-20 pb-24 text-center">
+        <h1 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
           <span className="text-foreground">Prepare.</span>{" "}
           <span className="text-primary">Assess.</span>{" "}
           <span className="text-foreground">Get Hired.</span>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          custom={2}
-          className="mt-6 text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed"
-        >
-          The all-in-one platform connecting top tech talent with leading companies.
-          AI-powered assessments, live video interviews, and real-time analytics.
-        </motion.p>
+        <p className="mt-6 text-lg text-muted max-w-2xl mx-auto leading-relaxed">
+          The all-in-one platform connecting tech talent with leading companies.
+          Mock tests, live interviews, and real-time job applications.
+        </p>
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          custom={3}
-          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
+        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link to="/signup">
-            <Button className="text-base px-8 py-6 gap-2 shadow-xl shadow-primary/30 glow-primary">
+            <Button className="text-base px-8 py-6 gap-2">
               Start as Candidate <ArrowRight className="w-5 h-5" />
             </Button>
           </Link>
           <Link to="/signup">
-            <Button variant="secondary" className="text-base px-8 py-6 gap-2 border-border">
+            <Button variant="secondary" className="text-base px-8 py-6 gap-2">
               Recruiter Portal <ChevronRight className="w-5 h-5" />
             </Button>
           </Link>
-        </motion.div>
-
-        {/* Trust Badges */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          custom={4}
-          className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-muted"
-        >
-          {["Free to Start", "No Credit Card", "Enterprise Ready"].map((t) => (
-            <div key={t} className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              {t}
-            </div>
-          ))}
-        </motion.div>
+        </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="relative z-10 max-w-6xl mx-auto px-6 py-24">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="text-center mb-16"
-        >
+      <section id="features" className="max-w-6xl mx-auto px-6 py-20">
+        <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Everything You Need to <span className="text-primary">Succeed</span>
           </h2>
           <p className="mt-4 text-muted max-w-xl mx-auto">
             From preparation to placement — we've got every step covered.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {features.map((f, i) => (
-            <motion.div
+          {features.map((f) => (
+            <div
               key={f.title}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              custom={i}
-              className="group relative p-8 rounded-2xl glass hover:border-primary/30 transition-all duration-300 cursor-default"
+              className="group p-8 rounded-2xl bg-white border border-[#e2ddd8] shadow-sm hover:shadow-md hover:border-[#1e3a5f]/20 transition-all duration-200"
             >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.color} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.color} flex items-center justify-center mb-5 shadow-lg`}>
                 <f.icon className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-bold text-foreground mb-3">{f.title}</h3>
               <p className="text-muted leading-relaxed">{f.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section id="stats" className="relative z-10 max-w-6xl mx-auto px-6 py-24">
-        <div className="rounded-2xl glass-strong p-10 md:p-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
-                className="text-center"
-              >
-                <p className="text-4xl md:text-5xl font-extrabold text-primary">{s.value}</p>
-                <p className="mt-2 text-muted text-sm font-medium">{s.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Companies Section */}
-      <section id="companies" className="relative z-10 max-w-6xl mx-auto px-6 py-20">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="text-center mb-12"
-        >
-          <p className="text-muted text-sm font-medium uppercase tracking-wider">Trusted by talent from top companies</p>
-        </motion.div>
-        <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-          {companies.map((name, i) => (
-            <motion.div
-              key={name}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              custom={i}
-              className="text-2xl md:text-3xl font-bold text-slate-600 hover:text-slate-400 transition-colors cursor-default select-none"
-            >
-              {name}
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative z-10 max-w-4xl mx-auto px-6 py-24 text-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="rounded-2xl glass-strong p-12 md:p-16 relative overflow-hidden"
-        >
-        
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground relative z-10">
+      <section className="max-w-4xl mx-auto px-6 py-20 text-center">
+        <div className="rounded-2xl bg-gradient-to-br from-[#0f172a] to-[#1e3a5f] p-12 md:p-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
             Ready to Start Your Journey?
           </h2>
-          <p className="mt-4 text-muted max-w-lg mx-auto relative z-10">
-            Join thousands of candidates and recruiters already using Learn2Hire.
+          <p className="mt-4 text-blue-200 max-w-lg mx-auto">
+            Join candidates and recruiters already using Learn2Hire.
           </p>
-          <Link to="/signup" className="relative z-10">
-            <Button className="mt-8 text-base px-10 py-6 gap-2 shadow-xl shadow-primary/30 glow-primary">
+          <Link to="/signup">
+            <Button className="mt-8 text-base px-10 py-6 gap-2 bg-white text-[#1e3a5f] hover:bg-[#f5f0eb]">
               Get Started — It's Free <ArrowRight className="w-5 h-5" />
             </Button>
           </Link>
-        </motion.div>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-border/50 py-8 text-center text-sm text-muted">
+      <footer className="border-t border-[#e2ddd8] py-8 text-center text-sm text-muted">
         <div className="flex items-center justify-center gap-2 mb-2">
           <img src={logoImg} alt="Learn2Hire" className="w-6 h-6 rounded-md object-cover" />
           <span className="font-bold text-foreground">Learn2Hire</span>

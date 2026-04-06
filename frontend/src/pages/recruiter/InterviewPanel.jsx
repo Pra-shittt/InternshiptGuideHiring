@@ -127,7 +127,7 @@ export function InterviewPanel() {
             {candidate?.skills?.slice(0, 3).map((s) => (
               <Badge key={s} variant="default" className="text-[10px]">{s}</Badge>
             ))}
-            <div className="flex items-center gap-1.5 bg-red-500/10 text-red-400 px-3 py-1.5 rounded-lg border border-red-500/20 font-mono text-sm font-medium">
+            <div className="flex items-center gap-1.5 bg-red-50 text-red-600 px-3 py-1.5 rounded-lg border border-red-500/20 font-mono text-sm font-medium">
               <Clock className="w-3.5 h-3.5" />
               {formatTime(elapsed)}
             </div>
@@ -135,12 +135,12 @@ export function InterviewPanel() {
         </Card>
 
         {/* Video Area */}
-        <div className="flex-1 bg-slate-900 rounded-xl overflow-hidden border border-border relative flex flex-col">
+        <div className="flex-1 bg-[#f5f0eb] rounded-xl overflow-hidden border border-border relative flex flex-col">
           <div className="flex-1 grid grid-cols-2 gap-3 p-3">
             {/* Candidate Video */}
-            <div className="bg-slate-800 rounded-lg border border-slate-700 relative overflow-hidden flex items-center justify-center">
+            <div className="bg-[#f5f0eb] rounded-lg border border-[#e2ddd8] relative overflow-hidden flex items-center justify-center">
               <div className="text-center">
-                <div className="w-20 h-20 rounded-full bg-slate-700 flex items-center justify-center mx-auto mb-3">
+                <div className="w-20 h-20 rounded-full bg-[#e2ddd8] flex items-center justify-center mx-auto mb-3">
                   <User className="w-10 h-10 text-slate-500" />
                 </div>
                 <p className="text-slate-500 text-sm">Candidate Video Stream</p>
@@ -152,12 +152,12 @@ export function InterviewPanel() {
             </div>
 
             {/* Recruiter (Local) Video */}
-            <div className="bg-slate-800 rounded-lg border border-slate-700 relative overflow-hidden flex items-center justify-center">
+            <div className="bg-[#f5f0eb] rounded-lg border border-[#e2ddd8] relative overflow-hidden flex items-center justify-center">
               {videoOn ? (
                 <video ref={localVideoRef} autoPlay muted playsInline className="w-full h-full object-cover" />
               ) : (
                 <div className="text-center">
-                  <div className="w-20 h-20 rounded-full bg-slate-700 flex items-center justify-center mx-auto mb-3">
+                  <div className="w-20 h-20 rounded-full bg-[#e2ddd8] flex items-center justify-center mx-auto mb-3">
                     <VideoOff className="w-10 h-10 text-slate-500" />
                   </div>
                   <p className="text-slate-500 text-sm">Camera Off</p>
@@ -165,13 +165,13 @@ export function InterviewPanel() {
               )}
               <div className="absolute bottom-3 left-3 bg-black/60 px-2.5 py-1 rounded-md text-xs font-medium backdrop-blur-sm border border-white/10 text-white flex items-center gap-1.5">
                 You (Recruiter)
-                {!micOn && <MicOff className="w-3 h-3 text-red-400" />}
+                {!micOn && <MicOff className="w-3 h-3 text-red-600" />}
               </div>
             </div>
           </div>
 
           {/* Controls Bar */}
-          <div className="h-16 bg-slate-950 border-t border-slate-800 flex items-center justify-center gap-3 px-6 shrink-0">
+          <div className="h-16 bg-slate-950 border-t border-[#e2ddd8] flex items-center justify-center gap-3 px-6 shrink-0">
             <Button
               variant={micOn ? "secondary" : "danger"}
               size="icon"
@@ -191,7 +191,7 @@ export function InterviewPanel() {
             <Button variant="secondary" size="icon" className="rounded-full w-11 h-11 transition-transform hover:scale-105">
               <MonitorUp className="w-4 h-4" />
             </Button>
-            <div className="w-px h-7 bg-slate-800 mx-1" />
+            <div className="w-px h-7 bg-[#f5f0eb] mx-1" />
             <Button
               variant="danger"
               size="icon"
@@ -213,9 +213,9 @@ export function InterviewPanel() {
           </div>
           {autoSaveStatus && (
             <span className={`text-xs px-2 py-0.5 rounded-full ${
-              autoSaveStatus === "Saved" ? "bg-green-500/10 text-green-400" :
+              autoSaveStatus === "Saved" ? "bg-green-50 text-green-600" :
               autoSaveStatus === "Saving..." ? "bg-primary/10 text-primary" :
-              "bg-red-500/10 text-red-400"
+              "bg-red-50 text-red-600"
             }`}>
               {autoSaveStatus}
             </span>
@@ -229,7 +229,7 @@ export function InterviewPanel() {
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full bg-background border border-border rounded-lg p-3 text-sm min-h-[200px] focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none text-foreground placeholder:text-slate-600"
+              className="w-full bg-background border border-border rounded-lg p-3 text-sm min-h-[200px] focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none text-foreground placeholder:text-slate-500"
               placeholder="Technical skills assessment, communication notes, cultural fit observations..."
             />
           </div>
@@ -244,7 +244,7 @@ export function InterviewPanel() {
                     key={star}
                     onClick={() => setRating(star)}
                     className={`transition-all duration-150 hover:scale-110 ${
-                      star <= rating ? "text-yellow-500" : "text-slate-600"
+                      star <= rating ? "text-amber-600" : "text-slate-500"
                     }`}
                   >
                     <Star className="w-6 h-6" fill={star <= rating ? "currentColor" : "none"} />

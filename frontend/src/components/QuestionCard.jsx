@@ -41,7 +41,7 @@ export function QuestionCard({ question, index, solved, bookmarked, onToggleBook
           className={`p-1.5 rounded-lg transition-all ${
             bookmarked
               ? "text-amber-400 bg-amber-500/10 hover:bg-amber-500/20"
-              : "text-slate-600 hover:text-slate-400 hover:bg-slate-800"
+              : "text-slate-600 hover:text-slate-600 hover:bg-[#f5f0eb]"
           }`}
           title={bookmarked ? "Remove bookmark" : "Bookmark question"}
         >
@@ -64,7 +64,7 @@ export function QuestionCard({ question, index, solved, bookmarked, onToggleBook
         {(question.tags || []).map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-800/60 text-slate-400 border border-slate-700/50"
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-[#f5f0eb]/60 text-slate-600 border border-[#e2ddd8]"
           >
             <Hash className="w-2.5 h-2.5" />
             {tag}

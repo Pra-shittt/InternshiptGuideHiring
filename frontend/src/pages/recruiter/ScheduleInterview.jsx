@@ -65,7 +65,7 @@ export function ScheduleInterview() {
         <Card className="p-10 text-center space-y-4 shadow-sm">
           <div className="text-5xl">✅</div>
           <h2 className="text-2xl font-bold text-foreground">Interview Scheduled!</h2>
-          <p className="text-slate-400">Redirecting to dashboard...</p>
+          <p className="text-slate-500">Redirecting to dashboard...</p>
         </Card>
       </div>
     );
@@ -75,13 +75,13 @@ export function ScheduleInterview() {
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-foreground">Schedule Interview</h1>
-        <p className="text-slate-400 mt-1">Create a new interview for a candidate.</p>
+        <p className="text-slate-500 mt-1">Create a new interview for a candidate.</p>
       </div>
 
       <Card className="p-8 shadow-sm border-border/80">
         <form onSubmit={handleSubmit} className="space-y-8">
           {error && (
-            <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm">
+            <div className="flex items-center gap-2 bg-red-50 border border-red-500/20 text-red-600 px-4 py-3 rounded-lg text-sm">
               {error}
             </div>
           )}
@@ -90,7 +90,7 @@ export function ScheduleInterview() {
             <h3 className="text-lg font-semibold text-foreground border-b border-border pb-3">Interview Details</h3>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-300">Select Candidate</label>
+              <label className="text-sm font-medium text-slate-500">Select Candidate</label>
               <div className="relative">
                 <select
                   value={candidateId}
@@ -109,7 +109,7 @@ export function ScheduleInterview() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
+                <label className="text-sm font-medium text-slate-500 flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-muted" /> Date
                 </label>
                 <Input
@@ -117,12 +117,12 @@ export function ScheduleInterview() {
                   value={date}
                   min={today}
                   onChange={(e) => setDate(e.target.value)}
-                  className="bg-background/50 text-slate-300"
+                  className="bg-background/50 text-slate-500"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300 flex items-center gap-2">
+                <label className="text-sm font-medium text-slate-500 flex items-center gap-2">
                   <Clock className="w-4 h-4 text-muted" /> Time
                 </label>
                 <div className="relative">

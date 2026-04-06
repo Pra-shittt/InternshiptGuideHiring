@@ -92,35 +92,35 @@ export function ManageContent() {
       <div className="flex justify-between items-center shrink-0">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Content Management</h1>
-          <p className="text-slate-400 mt-1">Add, edit, and categorize interview questions.</p>
+          <p className="text-slate-500 mt-1">Add, edit, and categorize interview questions.</p>
         </div>
         <Button onClick={openCreate} className="shadow-sm shadow-primary/20"><Plus className="w-4 h-4 mr-2" /> New Question</Button>
       </div>
 
       <Card className="flex-1 flex flex-col p-6 min-h-0 bg-card shadow-sm border-border/80">
         <div className="flex justify-between items-center mb-6 gap-4">
-          <div className="flex bg-slate-900 rounded-lg p-1 border border-border">
+          <div className="flex bg-[#f5f0eb] rounded-lg p-1 border border-border">
             {[
               { id: '', label: 'All' },
               { id: 'MCQ', label: 'MCQ' },
               { id: 'CODING', label: 'Coding' },
             ].map(tab => (
               <button key={tab.id} onClick={() => setTypeFilter(tab.id)}
-                className={`px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-colors ${typeFilter === tab.id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-slate-400 hover:text-foreground'}`}
+                className={`px-4 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-colors ${typeFilter === tab.id ? 'bg-primary text-primary-foreground shadow-sm' : 'text-slate-500 hover:text-[#1e293b]'}`}
               >
                 {tab.label}
               </button>
             ))}
           </div>
           <div className="flex gap-3 relative flex-1 max-w-md ml-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4" />
             <Input placeholder="Search questions..." className="pl-9 bg-background/50 shadow-sm" value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
         </div>
 
         <div className="flex-1 overflow-y-auto custom-scrollbar border border-border rounded-xl bg-background/50 shadow-inner">
           <table className="w-full text-sm text-left border-collapse">
-            <thead className="text-xs text-slate-400 uppercase bg-slate-800/80 sticky top-0 backdrop-blur-sm">
+            <thead className="text-xs text-slate-500 uppercase bg-[#f5f0eb]/80 sticky top-0 backdrop-blur-sm">
               <tr>
                 <th className="px-6 py-4 font-semibold border-b border-border">Title</th>
                 <th className="px-6 py-4 font-semibold border-b border-border">Type</th>
@@ -130,24 +130,24 @@ export function ManageContent() {
                 <th className="px-6 py-4 font-semibold text-right border-b border-border">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border text-slate-300 bg-card/40">
+            <tbody className="divide-y divide-border text-slate-500 bg-card/40">
               {loading && <tr><td colSpan={6} className="px-6 py-8 text-center text-slate-500">Loading...</td></tr>}
               {!loading && questions.length === 0 && <tr><td colSpan={6} className="px-6 py-8 text-center text-slate-500">No questions found</td></tr>}
               {questions.map(q => (
-                <tr key={q._id} className="hover:bg-slate-800/50 transition-colors group">
+                <tr key={q._id} className="hover:bg-[#f5f0eb] transition-colors group">
                   <td className="px-6 py-4 font-medium text-foreground">{q.title}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${q.type === 'MCQ' ? 'text-blue-400 bg-blue-400/10' : 'text-purple-400 bg-purple-400/10'}`}>{q.type}</span>
+                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${q.type === 'MCQ' ? 'text-blue-400 bg-blue-400/10' : 'text-purple-600 bg-purple-400/10'}`}>{q.type}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${q.difficulty === 'Easy' ? 'text-green-400 bg-green-400/10' : q.difficulty === 'Medium' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>{q.difficulty}</span>
+                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${q.difficulty === 'Easy' ? 'text-green-600 bg-green-400/10' : q.difficulty === 'Medium' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-600 bg-red-400/10'}`}>{q.difficulty}</span>
                   </td>
-                  <td className="px-6 py-4"><span className="bg-slate-800 px-2 py-0.5 rounded text-xs border border-slate-700">{q.topic}</span></td>
-                  <td className="px-6 py-4 text-xs text-slate-400">{q.company}</td>
+                  <td className="px-6 py-4"><span className="bg-[#f5f0eb] px-2 py-0.5 rounded text-xs border border-[#e2ddd8]">{q.topic}</span></td>
+                  <td className="px-6 py-4 text-xs text-slate-500">{q.company}</td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button onClick={() => openEdit(q)} variant="ghost" size="icon" className="h-8 w-8 text-primary hover:bg-primary/10"><Edit2 className="w-4 h-4" /></Button>
-                      <Button onClick={() => handleDelete(q._id)} variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:bg-red-400/10"><Trash2 className="w-4 h-4" /></Button>
+                      <Button onClick={() => handleDelete(q._id)} variant="ghost" size="icon" className="h-8 w-8 text-red-600 hover:bg-red-400/10"><Trash2 className="w-4 h-4" /></Button>
                     </div>
                   </td>
                 </tr>
@@ -165,28 +165,28 @@ export function ManageContent() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Title</label>
+                <label className="text-sm font-medium text-slate-500">Title</label>
                 <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Two Sum" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Company</label>
+                <label className="text-sm font-medium text-slate-500">Company</label>
                 <Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} placeholder="Amazon" />
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Topic</label>
+                <label className="text-sm font-medium text-slate-500">Topic</label>
                 <Input value={form.topic} onChange={(e) => setForm({ ...form, topic: e.target.value })} placeholder="Arrays" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Difficulty</label>
+                <label className="text-sm font-medium text-slate-500">Difficulty</label>
                 <select value={form.difficulty} onChange={(e) => setForm({ ...form, difficulty: e.target.value })} className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground">
                   <option>Easy</option><option>Medium</option><option>Hard</option>
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300">Type</label>
+                <label className="text-sm font-medium text-slate-500">Type</label>
                 <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground">
                   <option>MCQ</option><option>CODING</option>
                 </select>
@@ -196,22 +196,22 @@ export function ManageContent() {
             {form.type === 'MCQ' && (
               <>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-300">Question Text</label>
+                  <label className="text-sm font-medium text-slate-500">Question Text</label>
                   <textarea value={form.questionText} onChange={(e) => setForm({ ...form, questionText: e.target.value })} className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground min-h-[80px] resize-none" placeholder="Enter the question..." />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-300">Options</label>
+                  <label className="text-sm font-medium text-slate-500">Options</label>
                   {form.options.map((opt, i) => (
                     <Input key={i} value={opt} onChange={(e) => { const opts = [...form.options]; opts[i] = e.target.value; setForm({ ...form, options: opts }); }} placeholder={`Option ${i + 1}`} />
                   ))}
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-300">Correct Answer</label>
+                    <label className="text-sm font-medium text-slate-500">Correct Answer</label>
                     <Input value={form.correctAnswer} onChange={(e) => setForm({ ...form, correctAnswer: e.target.value })} placeholder="Must match one of the options exactly" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-300">Explanation</label>
+                    <label className="text-sm font-medium text-slate-500">Explanation</label>
                     <Input value={form.explanation || ""} onChange={(e) => setForm({ ...form, explanation: e.target.value })} placeholder="Optional explanation" />
                   </div>
                 </div>
@@ -221,13 +221,13 @@ export function ManageContent() {
             {form.type === 'CODING' && (
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-300">Platform</label>
+                  <label className="text-sm font-medium text-slate-500">Platform</label>
                   <select value={form.platform} onChange={(e) => setForm({ ...form, platform: e.target.value })} className="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground">
                     <option>LeetCode</option><option>GFG</option><option>CodeChef</option>
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-300">Link</label>
+                  <label className="text-sm font-medium text-slate-500">Link</label>
                   <Input value={form.link || ""} onChange={(e) => setForm({ ...form, link: e.target.value })} placeholder="https://leetcode.com/problems/..." />
                 </div>
               </div>

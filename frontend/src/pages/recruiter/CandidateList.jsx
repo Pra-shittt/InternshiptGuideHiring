@@ -139,7 +139,7 @@ export function CandidateList() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-border bg-slate-800/30">
+              <tr className="border-b border-border bg-[#f5f0eb]/50">
                 <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Candidate</th>
                 <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Skills</th>
                 <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted uppercase tracking-wider">Score</th>
@@ -161,7 +161,7 @@ export function CandidateList() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.03 }}
-                  className="hover:bg-slate-800/30 transition-colors group"
+                  className="hover:bg-[#f5f0eb]/50 transition-colors group"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
@@ -189,9 +189,9 @@ export function CandidateList() {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
-                        candidate.avgScore >= 70 ? 'bg-green-500/10 text-green-500' :
-                        candidate.avgScore >= 50 ? 'bg-amber-500/10 text-amber-500' :
-                        'bg-red-500/10 text-red-500'
+                        candidate.avgScore >= 70 ? 'bg-green-50 text-green-500' :
+                        candidate.avgScore >= 50 ? 'bg-amber-50 text-amber-500' :
+                        'bg-red-50 text-red-500'
                       }`}>
                         {candidate.avgScore}
                       </div>
@@ -288,7 +288,7 @@ export function CandidateList() {
               <h4 className="text-sm font-semibold text-muted uppercase tracking-wider mb-2">Resume</h4>
               {selectedCandidate.resumeUrl ? (
                 <a href={selectedCandidate.resumeUrl} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 rounded-lg border border-border bg-background hover:bg-slate-800/50 transition-colors">
+                  className="flex items-center gap-3 p-4 rounded-lg border border-border bg-background hover:bg-[#f5f0eb] transition-colors">
                   <FileText className="w-8 h-8 text-primary" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-foreground">Resume.pdf</p>

@@ -10,7 +10,7 @@ export function PracticeMode() {
     <div className="h-full flex flex-col gap-6 max-w-5xl mx-auto pb-4">
       <div className="text-center space-y-2 shrink-0">
         <h1 className="text-2xl font-bold text-foreground">AI Mock Interview Practice</h1>
-        <p className="text-slate-400">Behavioral & Technical Questions (Frontend Developer)</p>
+        <p className="text-slate-500">Behavioral & Technical Questions (Frontend Developer)</p>
       </div>
 
       <div className="flex-1 flex gap-6 min-h-0">
@@ -23,13 +23,13 @@ export function PracticeMode() {
             </p>
           </Card>
 
-          <Card className="flex-1 bg-slate-900 border-border relative overflow-hidden shadow-inner flex flex-col justify-end p-6 min-h-0">
+          <Card className="flex-1 bg-[#f5f0eb] border-border relative overflow-hidden shadow-inner flex flex-col justify-end p-6 min-h-0">
              <div className="absolute inset-0 flex items-center justify-center opacity-20">
                 <Video className="w-32 h-32 text-slate-500" />
              </div>
              
              { recording && (
-                <div className="absolute top-4 right-4 flex items-center gap-2 bg-red-500/20 text-red-400 px-3 py-1.5 rounded-full border border-red-500/30 text-sm font-medium backdrop-blur-sm z-10 shadow-sm">
+                <div className="absolute top-4 right-4 flex items-center gap-2 bg-red-500/20 text-red-600 px-3 py-1.5 rounded-full border border-red-500/30 text-sm font-medium backdrop-blur-sm z-10 shadow-sm">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></div>
                   Recording Answer
                 </div>
@@ -51,19 +51,19 @@ export function PracticeMode() {
                   <div className="flex items-center justify-center w-6 h-6 rounded-full border border-primary bg-primary/20 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-10">
                      <span className="text-[10px] font-bold">1</span>
                   </div>
-                  <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-primary/30 bg-primary/5 text-sm shadow-sm md:ml-4">Behavioral: Challenge</div>
+                  <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-primary/30 bg-[#1e3a5f]/5 text-sm shadow-sm md:ml-4">Behavioral: Challenge</div>
               </div>
               <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group mt-6">
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full border border-slate-700 bg-slate-800 text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-10">
+                  <div className="flex items-center justify-center w-6 h-6 rounded-full border border-[#e2ddd8] bg-[#f5f0eb] text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-10">
                      <span className="text-[10px] font-bold">2</span>
                   </div>
-                  <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-slate-800 bg-slate-900 text-slate-500 text-sm md:mr-4">Technical: Architecture</div>
+                  <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-[#e2ddd8] bg-[#f5f0eb] text-slate-500 text-sm md:mr-4">Technical: Architecture</div>
               </div>
               <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group mt-6">
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full border border-slate-700 bg-slate-800 text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-10">
+                  <div className="flex items-center justify-center w-6 h-6 rounded-full border border-[#e2ddd8] bg-[#f5f0eb] text-slate-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-10">
                      <span className="text-[10px] font-bold">3</span>
                   </div>
-                  <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-slate-800 bg-slate-900 text-slate-500 text-sm md:ml-4">Technical: Algorithms</div>
+                  <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-1.5rem)] p-3 rounded-lg border border-[#e2ddd8] bg-[#f5f0eb] text-slate-500 text-sm md:ml-4">Technical: Algorithms</div>
               </div>
            </div>
            

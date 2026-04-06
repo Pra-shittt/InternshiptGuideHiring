@@ -155,7 +155,7 @@ export function VideoInterview() {
       <div className="h-full flex items-center justify-center">
         <Card className="p-10 max-w-md w-full text-center space-y-6 shadow-lg">
           <div className="mx-auto w-14 h-14 bg-amber-500/20 flex items-center justify-center rounded-2xl border border-amber-500/40">
-            <Wifi className="w-7 h-7 text-amber-400 animate-pulse" />
+            <Wifi className="w-7 h-7 text-amber-600 animate-pulse" />
           </div>
           <h2 className="text-xl font-bold text-foreground">Waiting for recruiter...</h2>
           <p className="text-muted text-sm">You'll be connected once the recruiter joins</p>
@@ -185,23 +185,23 @@ export function VideoInterview() {
             {recruiter?.company && <span className="text-muted"> · {recruiter.company}</span>}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-lg text-sm font-mono font-medium text-muted border border-border">
+        <div className="flex items-center gap-1.5 bg-[#f5f0eb] px-3 py-1.5 rounded-lg text-sm font-mono font-medium text-muted border border-border">
           <Clock className="w-3.5 h-3.5" />
           {formatTime(elapsed)}
         </div>
       </Card>
 
       {/* Video Area */}
-      <div className="flex-1 bg-slate-900 rounded-xl overflow-hidden border border-border flex flex-col">
+      <div className="flex-1 bg-[#f5f0eb] rounded-xl overflow-hidden border border-border flex flex-col">
         <div className="flex-1 grid grid-cols-2 gap-3 p-3">
           {/* Recruiter Video */}
-          <div className="bg-slate-800 rounded-lg border border-slate-700 relative overflow-hidden flex items-center justify-center">
+          <div className="bg-[#f5f0eb] rounded-lg border border-[#e2ddd8] relative overflow-hidden flex items-center justify-center">
             <div className="text-center">
-              <div className="w-24 h-24 rounded-full bg-slate-700 flex items-center justify-center mx-auto mb-3">
+              <div className="w-24 h-24 rounded-full bg-[#e2ddd8] flex items-center justify-center mx-auto mb-3">
                 <User className="w-12 h-12 text-slate-500" />
               </div>
-              <p className="text-slate-400 font-medium">{recruiter?.name || "Recruiter"}</p>
-              <p className="text-slate-600 text-sm">{recruiter?.company}</p>
+              <p className="text-slate-500 font-medium">{recruiter?.name || "Recruiter"}</p>
+              <p className="text-slate-500 text-sm">{recruiter?.company}</p>
             </div>
             <div className="absolute bottom-3 left-3 bg-black/60 px-2.5 py-1 rounded-md text-xs font-medium backdrop-blur-sm border border-white/10 text-white flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
@@ -210,12 +210,12 @@ export function VideoInterview() {
           </div>
 
           {/* Local Video */}
-          <div className="bg-slate-800 rounded-lg border border-slate-700 relative overflow-hidden flex items-center justify-center">
+          <div className="bg-[#f5f0eb] rounded-lg border border-[#e2ddd8] relative overflow-hidden flex items-center justify-center">
             {videoOn ? (
               <video ref={localVideoRef} autoPlay muted playsInline className="w-full h-full object-cover" />
             ) : (
               <div className="text-center">
-                <div className="w-24 h-24 rounded-full bg-slate-700 flex items-center justify-center mx-auto mb-3">
+                <div className="w-24 h-24 rounded-full bg-[#e2ddd8] flex items-center justify-center mx-auto mb-3">
                   <VideoOff className="w-12 h-12 text-slate-500" />
                 </div>
                 <p className="text-slate-500 text-sm">Camera Off</p>
@@ -223,13 +223,13 @@ export function VideoInterview() {
             )}
             <div className="absolute bottom-3 left-3 bg-black/60 px-2.5 py-1 rounded-md text-xs font-medium backdrop-blur-sm border border-white/10 text-white flex items-center gap-1.5">
               You (Candidate)
-              {!micOn && <MicOff className="w-3 h-3 text-red-400" />}
+              {!micOn && <MicOff className="w-3 h-3 text-red-600" />}
             </div>
           </div>
         </div>
 
         {/* Controls */}
-        <div className="h-16 bg-slate-950 border-t border-slate-800 flex items-center justify-center gap-3 px-6 shrink-0">
+        <div className="h-16 bg-slate-950 border-t border-[#e2ddd8] flex items-center justify-center gap-3 px-6 shrink-0">
           <Button variant={micOn ? "secondary" : "danger"} size="icon" className="rounded-full w-11 h-11 hover:scale-105 transition-transform" onClick={() => setMicOn(!micOn)}>
             {micOn ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}
           </Button>
@@ -239,7 +239,7 @@ export function VideoInterview() {
           <Button variant="secondary" size="icon" className="rounded-full w-11 h-11 hover:scale-105 transition-transform">
             <MonitorUp className="w-4 h-4" />
           </Button>
-          <div className="w-px h-7 bg-slate-800 mx-1" />
+          <div className="w-px h-7 bg-[#f5f0eb] mx-1" />
           <Button variant="danger" size="icon" className="rounded-full w-11 h-11 hover:bg-red-600 hover:scale-105 transition-transform"
             onClick={() => navigate("/candidate/dashboard")}
           >

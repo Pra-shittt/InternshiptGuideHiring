@@ -5,6 +5,10 @@ import { Login } from './pages/auth/Login';
 import { Signup } from './pages/auth/Signup';
 
 import { CandidateDashboard } from './pages/candidate/Dashboard';
+import { Jobs } from './pages/candidate/Jobs';
+import { MyApplications } from './pages/candidate/MyApplications';
+import { LiveInterviews } from './pages/candidate/LiveInterviews';
+import { Profile } from './pages/candidate/Profile';
 import { VideoInterview } from './pages/candidate/VideoInterview';
 import { MockTest } from './pages/candidate/MockTest';
 import { CompanyPrep } from './pages/candidate/CompanyPrep';
@@ -16,6 +20,8 @@ import { Performance } from './pages/candidate/Performance';
 import { Leaderboard } from './pages/Leaderboard';
 
 import { RecruiterDashboard } from './pages/recruiter/Dashboard';
+import { PostJob } from './pages/recruiter/PostJob';
+import { MyJobs } from './pages/recruiter/MyJobs';
 import { InterviewPanel } from './pages/recruiter/InterviewPanel';
 import { ScheduleInterview } from './pages/recruiter/ScheduleInterview';
 import { CandidateList } from './pages/recruiter/CandidateList';
@@ -35,6 +41,10 @@ export default function App() {
       {/* Candidate Routes */}
       <Route element={<DashboardLayout allowedRoles={['CANDIDATE']} />}>
         <Route path="/candidate/dashboard" element={<CandidateDashboard />} />
+        <Route path="/candidate/jobs" element={<Jobs />} />
+        <Route path="/candidate/applications" element={<MyApplications />} />
+        <Route path="/candidate/interviews" element={<LiveInterviews />} />
+        <Route path="/candidate/profile" element={<Profile />} />
         <Route path="/candidate/companies" element={<CompanyPrep />} />
         <Route path="/candidate/practice" element={<PracticeQuestionsPage />} />
         <Route path="/candidate/practice/mock" element={<PracticeMode />} />
@@ -50,6 +60,8 @@ export default function App() {
       {/* Recruiter Routes */}
       <Route element={<DashboardLayout allowedRoles={['RECRUITER']} />}>
         <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
+        <Route path="/recruiter/post-job" element={<PostJob />} />
+        <Route path="/recruiter/jobs" element={<MyJobs />} />
         <Route path="/recruiter/schedule" element={<ScheduleInterview />} />
         <Route path="/recruiter/candidates" element={<CandidateList />} />
         <Route path="/recruiter/interview/:id" element={<InterviewPanel />} />
@@ -60,7 +72,6 @@ export default function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/users" element={<ManageUsers />} />
         <Route path="/admin/content" element={<ManageContent />} />
-
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

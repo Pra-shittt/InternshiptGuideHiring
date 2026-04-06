@@ -101,6 +101,7 @@ export const adminAPI = {
 export const jobAPI = {
   getAll: (params) => api.get('/jobs', { params }),
   getById: (id) => api.get(`/jobs/${id}`),
+  getMyJobs: () => api.get('/jobs/my-jobs'),
   create: (data) => api.post('/jobs', data),
   update: (id, data) => api.put(`/jobs/${id}`, data),
   delete: (id) => api.delete(`/jobs/${id}`),
@@ -108,10 +109,24 @@ export const jobAPI = {
 
 // ─── Applications ────────────────────────────────────
 export const applicationAPI = {
-  getAll: (params) => api.get('/applications', { params }),
-  getByJob: (jobId) => api.get(`/applications/job/${jobId}`),
   apply: (data) => api.post('/applications', data),
+  getMyApplications: () => api.get('/applications/my-applications'),
+  getByJob: (jobId) => api.get(`/applications/job/${jobId}`),
   updateStatus: (id, data) => api.put(`/applications/${id}/status`, data),
+  withdraw: (id) => api.put(`/applications/${id}/withdraw`),
+};
+
+// ─── Notifications ───────────────────────────────────
+export const notificationAPI = {
+  getAll: (unread = false) => api.get('/notifications', { params: { unread } }),
+  markAsRead: (id) => api.put(`/notifications/${id}/read`),
+  markAllAsRead: () => api.put('/notifications/read-all'),
+};
+
+// ─── Users ───────────────────────────────────────────
+export const userAPI = {
+  getProfile: () => api.get('/users/me'),
+  updateProfile: (data) => api.put('/users/me', data),
 };
 
 export default api;

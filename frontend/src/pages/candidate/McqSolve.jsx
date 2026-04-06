@@ -86,7 +86,7 @@ export function McqSolve() {
     return (
       <div className="h-full flex items-center justify-center">
         <Card className="p-8 max-w-md text-center space-y-4">
-          <XCircle className="w-12 h-12 text-red-400 mx-auto" />
+          <XCircle className="w-12 h-12 text-red-600 mx-auto" />
           <h2 className="text-xl font-bold text-foreground">Error</h2>
           <p className="text-muted">{error}</p>
           <Button onClick={() => navigate(-1)} variant="secondary" className="gap-2">
@@ -102,7 +102,7 @@ export function McqSolve() {
       {/* Header Bar */}
       <Card className="flex items-center justify-between p-4 shrink-0 shadow-sm">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="gap-1.5 text-muted hover:text-foreground">
+          <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="gap-1.5 text-muted hover:text-[#1e293b]">
             <ArrowLeft className="w-4 h-4" /> Back
           </Button>
           <div className="h-6 w-px bg-border" />
@@ -115,7 +115,7 @@ export function McqSolve() {
               <span className="text-xs text-muted">{question.topic}</span>
               {question.company && (
                 <>
-                  <span className="text-xs text-slate-600">•</span>
+                  <span className="text-xs text-slate-500">•</span>
                   <span className="text-xs text-slate-500">{question.company}</span>
                 </>
               )}
@@ -124,7 +124,7 @@ export function McqSolve() {
         </div>
         <div className="flex items-center gap-4">
           <div className={`flex items-center gap-2 font-mono text-sm font-medium px-3 py-1.5 rounded-lg border ${
-            timeElapsed > 120 ? "text-amber-500 bg-amber-500/10 border-amber-500/20" : "text-slate-400 bg-slate-800/60 border-border"
+            timeElapsed > 120 ? "text-amber-500 bg-amber-50 border-amber-500/20" : "text-slate-500 bg-[#f5f0eb] border-border"
           }`}>
             <Clock className="w-4 h-4" />
             {formatTime(timeElapsed)}
@@ -146,13 +146,13 @@ export function McqSolve() {
             {/* Options */}
             <div className="space-y-3">
               {question.options?.map((option, idx) => {
-                let optionStyles = "border-border bg-background text-slate-300 hover:border-slate-600 hover:bg-slate-800/50";
+                let optionStyles = "border-border bg-background text-slate-500 hover:border-slate-600 hover:bg-[#f5f0eb]";
 
                 if (submitted) {
                   if (option === question.correctAnswer) {
-                    optionStyles = "border-green-500 bg-green-500/10 text-green-400 shadow-sm shadow-green-500/10";
+                    optionStyles = "border-green-500 bg-green-50 text-green-600 shadow-sm shadow-green-500/10";
                   } else if (option === selectedAnswer && option !== question.correctAnswer) {
-                    optionStyles = "border-red-500 bg-red-500/10 text-red-400 shadow-sm shadow-red-500/10";
+                    optionStyles = "border-red-500 bg-red-50 text-red-600 shadow-sm shadow-red-500/10";
                   } else {
                     optionStyles = "border-border bg-background/50 text-slate-500 opacity-60";
                   }
@@ -171,12 +171,12 @@ export function McqSolve() {
                   >
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 ${
                       submitted && option === question.correctAnswer
-                        ? "bg-green-500/20 text-green-400"
+                        ? "bg-green-500/20 text-green-600"
                         : submitted && option === selectedAnswer
-                        ? "bg-red-500/20 text-red-400"
+                        ? "bg-red-500/20 text-red-600"
                         : option === selectedAnswer
                         ? "bg-primary/20 text-primary"
-                        : "bg-slate-800 text-slate-500"
+                        : "bg-[#f5f0eb] text-slate-500"
                     }`}>
                       {String.fromCharCode(65 + idx)}
                     </div>
@@ -187,7 +187,7 @@ export function McqSolve() {
                       <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
                     )}
                     {submitted && option === selectedAnswer && option !== question.correctAnswer && (
-                      <XCircle className="w-5 h-5 text-red-400 shrink-0" />
+                      <XCircle className="w-5 h-5 text-red-600 shrink-0" />
                     )}
                   </motion.button>
                 );
@@ -213,22 +213,22 @@ export function McqSolve() {
                       {isCorrect ? (
                         <>
                           <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                            <Trophy className="w-5 h-5 text-green-400" />
+                            <Trophy className="w-5 h-5 text-green-600" />
                           </div>
                           <div>
-                            <h3 className="text-lg font-bold text-green-400">Correct! 🎉</h3>
+                            <h3 className="text-lg font-bold text-green-600">Correct! 🎉</h3>
                             <p className="text-sm text-muted">Solved in {formatTime(timeElapsed)}</p>
                           </div>
                         </>
                       ) : (
                         <>
                           <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
-                            <XCircle className="w-5 h-5 text-red-400" />
+                            <XCircle className="w-5 h-5 text-red-600" />
                           </div>
                           <div>
-                            <h3 className="text-lg font-bold text-red-400">Incorrect</h3>
+                            <h3 className="text-lg font-bold text-red-600">Incorrect</h3>
                             <p className="text-sm text-muted">
-                              Correct answer: <span className="text-green-400 font-medium">{question.correctAnswer}</span>
+                              Correct answer: <span className="text-green-600 font-medium">{question.correctAnswer}</span>
                             </p>
                           </div>
                         </>
@@ -253,9 +253,9 @@ export function McqSolve() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="mt-3 p-4 rounded-xl bg-slate-800/40 border border-border"
+                            className="mt-3 p-4 rounded-xl bg-[#f5f0eb] border border-border"
                           >
-                            <p className="text-sm text-slate-300 leading-relaxed">{question.explanation}</p>
+                            <p className="text-sm text-slate-500 leading-relaxed">{question.explanation}</p>
                           </motion.div>
                         )}
                       </AnimatePresence>

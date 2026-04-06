@@ -97,7 +97,7 @@ export function Assessment() {
         <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight">
           Advanced Problem <span className="text-primary">Repository</span>
         </h1>
-        <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+        <p className="text-slate-500 text-lg max-w-2xl mx-auto">
           We've curated the most challenging problems from LeetCode and Codeforces to help you prepare for elite engineering rounds. Master these to reach the top 1%.
         </p>
       </motion.div>
@@ -111,7 +111,7 @@ export function Assessment() {
           className="space-y-6"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-3 bg-amber-500/10 rounded-2xl border border-amber-500/20">
+            <div className="p-3 bg-amber-50 rounded-2xl border border-amber-500/20">
               <Trophy className="w-6 h-6 text-amber-500" />
             </div>
             <div>
@@ -135,7 +135,7 @@ export function Assessment() {
           className="space-y-6"
         >
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-3 bg-red-500/10 rounded-2xl border border-red-500/20">
+            <div className="p-3 bg-red-50 rounded-2xl border border-red-500/20">
               <Brain className="w-6 h-6 text-red-500" />
             </div>
             <div>
@@ -159,14 +159,14 @@ export function Assessment() {
         transition={{ delay: 0.4 }}
         className="max-w-6xl mx-auto"
       >
-        <Card className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8 bg-slate-900/50 border-slate-800 backdrop-blur-xl">
+        <Card className="grid grid-cols-1 md:grid-cols-3 gap-8 p-8 bg-[#f5f0eb]/50 border-[#e2ddd8] backdrop-blur-xl">
           <div className="text-center space-y-2">
             <Target className="w-8 h-8 text-primary mx-auto" />
             <h3 className="text-3xl font-bold text-white">Level Up</h3>
             <p className="text-slate-500 text-sm">Designed for Senior & Staff levels</p>
           </div>
-          <div className="text-center space-y-2 border-y md:border-y-0 md:border-x border-slate-800 py-6 md:py-0">
-            <Terminal className="w-8 h-8 text-cyan-400 mx-auto" />
+          <div className="text-center space-y-2 border-y md:border-y-0 md:border-x border-[#e2ddd8] py-6 md:py-0">
+            <Terminal className="w-8 h-8 text-cyan-600 mx-auto" />
             <h3 className="text-3xl font-bold text-white">Vetted</h3>
             <p className="text-slate-500 text-sm">Hand-picked by industry experts</p>
           </div>
@@ -194,11 +194,11 @@ function ProblemCard({ prob, index }) {
         rel="noopener noreferrer"
         className="block group"
       >
-        <Card className="p-5 bg-slate-900/40 hover:bg-slate-800/60 border-slate-800 hover:border-primary/40 transition-all duration-300">
+        <Card className="p-5 bg-[#f5f0eb] hover:bg-[#f5f0eb] border-[#e2ddd8] hover:border-primary/40 transition-all duration-300">
           <div className="flex items-start justify-between">
             <div className="space-y-3 flex-1">
               <div className="flex items-center gap-2">
-                <Badge className="bg-slate-800 text-slate-400 border-slate-700 text-[10px] uppercase font-bold px-2">
+                <Badge className="bg-[#f5f0eb] text-slate-500 border-[#e2ddd8] text-[10px] uppercase font-bold px-2">
                   {prob.platform}
                 </Badge>
                 <Badge className={`${prob.color.replace('text', 'bg').replace('-500', '/10')} ${prob.color} border-${prob.color.split('-')[1]}-500/20 text-[10px] uppercase font-bold px-2`}>
@@ -210,7 +210,7 @@ function ProblemCard({ prob, index }) {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {prob.tags.map((tag, j) => (
-                  <span key={j} className="text-[10px] text-slate-500 bg-slate-950 px-2 py-0.5 rounded-md border border-slate-800">
+                  <span key={j} className="text-[10px] text-slate-500 bg-slate-950 px-2 py-0.5 rounded-md border border-[#e2ddd8]">
                     {tag}
                   </span>
                 ))}
