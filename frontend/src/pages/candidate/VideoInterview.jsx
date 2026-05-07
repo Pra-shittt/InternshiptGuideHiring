@@ -20,6 +20,7 @@ export function VideoInterview() {
   const [elapsed, setElapsed] = useState(0);
   const [connectionState, setConnectionState] = useState("idle"); // idle | connecting | waiting | connected
   const localVideoRef = useRef(null);
+  const streamRef = useRef(null);
 
   // Load interview
   useEffect(() => {
@@ -43,20 +44,46 @@ export function VideoInterview() {
     return () => clearInterval(timer);
   }, [connectionState]);
 
-  // Camera
+  // Start camera when user clicks Join (connecting phase)
   useEffect(() => {
-    let stream = null;
+    if (connectionState !== "connecting") return;
     const getMedia = async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        streamRef.current = stream;
         if (localVideoRef.current) localVideoRef.current.srcObject = stream;
       } catch (err) {
-        console.log("Camera unavailable:", err.message);
+        console.warn("Camera unavailable:", err.message);
       }
     };
-    if (videoOn && connectionState === "connected") getMedia();
-    return () => { if (stream) stream.getTracks().forEach((t) => t.stop()); };
-  }, [videoOn, connectionState]);
+    getMedia();
+    return () => {}; // keep stream alive — cleanup only on unmount
+  }, [connectionState]);
+
+  // Assign stream to video element once it's in the DOM (connected state)
+  useEffect(() => {
+    if (connectionState === "connected" && streamRef.current && localVideoRef.current) {
+      localVideoRef.current.srcObject = streamRef.current;
+    }
+  }, [connectionState]);
+
+  // Toggle tracks when mic/video buttons are clicked
+  useEffect(() => {
+    if (!streamRef.current) return;
+    streamRef.current.getVideoTracks().forEach((t) => { t.enabled = videoOn; });
+  }, [videoOn]);
+
+  useEffect(() => {
+    if (!streamRef.current) return;
+    streamRef.current.getAudioTracks().forEach((t) => { t.enabled = micOn; });
+  }, [micOn]);
+
+  // Stop all tracks on unmount
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) streamRef.current.getTracks().forEach((t) => t.stop());
+    };
+  }, []);
 
   const formatTime = (s) => {
     const m = Math.floor(s / 60);

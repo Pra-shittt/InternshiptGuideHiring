@@ -53,18 +53,9 @@ export function CandidateList() {
     setCandidateDetail(null);
   };
 
-  const handleStartInterview = async (candidateId) => {
-    try {
-      const res = await recruiterAPI.scheduleInterview({
-        candidateId,
-        scheduledAt: new Date().toISOString(),
-      });
-      const interview = res.data.data;
-      const startRes = await interviewAPI.start(interview._id);
-      navigate(`/recruiter/interview/${interview._id}`);
-    } catch (err) {
-      alert(err.response?.data?.message || "Failed to start interview");
-    }
+  const handleStartInterview = (candidateId) => {
+    // Redirect to schedule page — backend requires a jobId with existing application
+    navigate(`/recruiter/schedule?candidateId=${candidateId}`);
   };
 
   const handleSchedule = (candidateId) => {

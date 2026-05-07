@@ -6,24 +6,31 @@ import {
   Briefcase, Users, MapPin, Loader2, ChevronDown, ChevronUp, Calendar,
   DollarSign, Mail, FileText
 } from "lucide-react";
-import { jobAPI, applicationAPI, recruiterAPI } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { jobAPI, applicationAPI } from "../../services/api";
+import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function MyJobs() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(null);
   const [applicants, setApplicants] = useState({});
   const [loadingApplicants, setLoadingApplicants] = useState(null);
 
-  useEffect(() => {
+  const fetchJobs = () => {
+    setLoading(true);
     jobAPI.getMyJobs()
       .then((res) => setJobs(res.data.data || []))
       .catch(() => setJobs([]))
       .finally(() => setLoading(false));
-  }, []);
+  };
+
+  // Refetch every time this page is visited
+  useEffect(() => {
+    fetchJobs();
+  }, [location.key]);
 
   const toggleExpand = async (jobId) => {
     if (expanded === jobId) {

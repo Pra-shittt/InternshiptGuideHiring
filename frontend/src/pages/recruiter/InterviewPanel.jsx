@@ -16,6 +16,7 @@ export function InterviewPanel() {
   const navigate = useNavigate();
   const [interview, setInterview] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(null);
   const [micOn, setMicOn] = useState(true);
   const [videoOn, setVideoOn] = useState(true);
   const [notes, setNotes] = useState("");
@@ -23,30 +24,50 @@ export function InterviewPanel() {
   const [saving, setSaving] = useState(false);
   const [autoSaveStatus, setAutoSaveStatus] = useState("");
   const [elapsed, setElapsed] = useState(0);
+  const [started, setStarted] = useState(false);
   const autoSaveTimer = useRef(null);
   const localVideoRef = useRef(null);
+  const streamRef = useRef(null);
 
-  // Load interview data
+  // Load interview data, then start the interview if SCHEDULED
   useEffect(() => {
+    setLoading(true);
+    setLoadError(null);
     interviewAPI.getById(id)
-      .then((res) => {
-        setInterview(res.data.data);
-        setNotes(res.data.data.notes || "");
-        setRating(res.data.data.rating || 3);
+      .then(async (res) => {
+        const data = res.data.data;
+        setInterview(data);
+        setNotes(data.notes || "");
+        setRating(data.rating || 3);
+
+        // If it's still SCHEDULED, start it
+        if (data.status === "SCHEDULED") {
+          try {
+            const startRes = await interviewAPI.start(id);
+            setInterview((prev) => ({ ...prev, ...startRes.data.data, status: "IN_PROGRESS" }));
+          } catch (err) {
+            console.warn("Could not start interview:", err.message);
+          }
+        }
+        setStarted(true);
       })
-      .catch(() => setInterview(null))
+      .catch((err) => {
+        setLoadError(err.response?.data?.message || "Failed to load interview");
+        setInterview(null);
+      })
       .finally(() => setLoading(false));
   }, [id]);
 
-  // Interview timer
+  // Interview timer — only count when started
   useEffect(() => {
+    if (!started) return;
     const timer = setInterval(() => setElapsed((e) => e + 1), 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [started]);
 
-  // Auto-save notes
+  // Auto-save notes (only after initial load)
   useEffect(() => {
-    if (!interview) return;
+    if (!started || !interview) return;
     clearTimeout(autoSaveTimer.current);
     autoSaveTimer.current = setTimeout(async () => {
       setAutoSaveStatus("Saving...");
@@ -57,28 +78,50 @@ export function InterviewPanel() {
       } catch {
         setAutoSaveStatus("Failed to save");
       }
-    }, 1500);
+    }, 2000);
     return () => clearTimeout(autoSaveTimer.current);
   }, [notes, rating]);
 
-  // Get local camera stream
+  // Start camera immediately and keep it alive
   useEffect(() => {
-    let stream = null;
+    if (!started) return;
     const getMedia = async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        streamRef.current = stream;
         if (localVideoRef.current) {
           localVideoRef.current.srcObject = stream;
         }
       } catch (err) {
-        console.log("Camera not available:", err.message);
+        console.warn("Camera unavailable:", err.message);
       }
     };
-    if (videoOn) getMedia();
+    getMedia();
     return () => {
-      if (stream) stream.getTracks().forEach((t) => t.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((t) => t.stop());
+        streamRef.current = null;
+      }
     };
+  }, [started]);
+
+  // Re-assign stream when video ref becomes available
+  useEffect(() => {
+    if (localVideoRef.current && streamRef.current) {
+      localVideoRef.current.srcObject = streamRef.current;
+    }
+  });
+
+  // Toggle video/audio tracks
+  useEffect(() => {
+    if (!streamRef.current) return;
+    streamRef.current.getVideoTracks().forEach((t) => { t.enabled = videoOn; });
   }, [videoOn]);
+
+  useEffect(() => {
+    if (!streamRef.current) return;
+    streamRef.current.getAudioTracks().forEach((t) => { t.enabled = micOn; });
+  }, [micOn]);
 
   const formatTime = (s) => {
     const h = Math.floor(s / 3600);
@@ -91,17 +134,38 @@ export function InterviewPanel() {
     setSaving(true);
     try {
       await interviewAPI.end(id, { result, notes, rating });
+      // Stop camera
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((t) => t.stop());
+        streamRef.current = null;
+      }
       navigate("/recruiter/dashboard");
     } catch (err) {
-      alert("Failed to end interview");
+      alert(err.response?.data?.message || "Failed to end interview");
     }
     setSaving(false);
   };
 
   if (loading) {
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="h-full flex flex-col items-center justify-center gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <p className="text-muted text-sm">Loading interview...</p>
+      </div>
+    );
+  }
+
+  if (loadError || !interview) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Card className="p-10 max-w-lg w-full text-center space-y-4">
+          <div className="text-5xl">❌</div>
+          <h2 className="text-xl font-bold text-foreground">Interview Not Found</h2>
+          <p className="text-muted">{loadError || "Interview data could not be loaded"}</p>
+          <Button onClick={() => navigate("/recruiter/dashboard")} variant="secondary" className="mt-4">
+            Back to Dashboard
+          </Button>
+        </Card>
       </div>
     );
   }
@@ -143,7 +207,8 @@ export function InterviewPanel() {
                 <div className="w-20 h-20 rounded-full bg-[#e2ddd8] flex items-center justify-center mx-auto mb-3">
                   <User className="w-10 h-10 text-slate-500" />
                 </div>
-                <p className="text-slate-500 text-sm">Candidate Video Stream</p>
+                <p className="text-slate-500 font-medium">{candidate?.name || "Candidate"}</p>
+                <p className="text-slate-400 text-xs mt-1">Video stream (WebRTC not connected)</p>
               </div>
               <div className="absolute bottom-3 left-3 bg-black/60 px-2.5 py-1 rounded-md text-xs font-medium backdrop-blur-sm border border-white/10 text-white flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
